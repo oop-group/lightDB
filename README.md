@@ -1,2 +1,2 @@
 # lightDB
-A very weak light DB.
+A very weak light DB for oop.

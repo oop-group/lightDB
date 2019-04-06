@@ -1,3 +1,26 @@
 ﻿  unittest1.cpp
-    正在创建库 D:\courses\this_semester\oop\homework\big_work\lightDB\lightDB\Debug\test.lib 和对象 D:\courses\this_semester\oop\homework\big_work\lightDB\lightDB\Debug\test.exp
-  test.vcxproj -> D:\courses\this_semester\oop\homework\big_work\lightDB\lightDB\Debug\test.dll
+c:\program files (x86)\microsoft visual studio\2017\community\vc\auxiliary\vs\unittest\include\cppunittestassert.h(66): error C2338: Test writer must define specialization of ToString<const Q& q> for your class class std::basic_string<wchar_t,struct std::char_traits<wchar_t>,class std::allocator<wchar_t> > __cdecl Microsoft::VisualStudio::CppUnitTestFramework::ToString<enum ColumnType>(const enum ColumnType &).
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\auxiliary\vs\unittest\include\cppunittestassert.h(134): note: 参见对正在编译的函数 模板 实例化“std::wstring Microsoft::VisualStudio::CppUnitTestFramework::ToString<T>(const Q &)”的引用
+          with
+          [
+              T=ColumnType,
+              Q=ColumnType
+          ]
+  d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\test\unittest1.cpp(38): note: 参见对正在编译的函数 模板 实例化“void Microsoft::VisualStudio::CppUnitTestFramework::Assert::AreEqual<ColumnType>(const T &,const T &,const wchar_t *,const Microsoft::VisualStudio::CppUnitTestFramework::__LineInfo *)”的引用
+          with
+          [
+              T=ColumnType
+          ]
+c:\program files (x86)\microsoft visual studio\2017\community\vc\auxiliary\vs\unittest\include\cppunittestassert.h(66): error C2338: Test writer must define specialization of ToString<const Q& q> for your class class std::basic_string<wchar_t,struct std::char_traits<wchar_t>,class std::allocator<wchar_t> > __cdecl Microsoft::VisualStudio::CppUnitTestFramework::ToString<class std::vector<enum ColumnConstraint,class std::allocator<enum ColumnConstraint> >>(const class std::vector<enum ColumnConstraint,class std::allocator<enum ColumnConstraint> > &).
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\auxiliary\vs\unittest\include\cppunittestassert.h(134): note: 参见对正在编译的函数 模板 实例化“std::wstring Microsoft::VisualStudio::CppUnitTestFramework::ToString<T>(const Q &)”的引用
+          with
+          [
+              T=std::vector<ColumnConstraint,std::allocator<ColumnConstraint>>,
+              Q=std::vector<ColumnConstraint,std::allocator<ColumnConstraint>>
+          ]
+  d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\test\unittest1.cpp(39): note: 参见对正在编译的函数 模板 实例化“void Microsoft::VisualStudio::CppUnitTestFramework::Assert::AreEqual<std::vector<ColumnConstraint,std::allocator<_Ty>>>(const T &,const T &,const wchar_t *,const Microsoft::VisualStudio::CppUnitTestFramework::__LineInfo *)”的引用
+          with
+          [
+              _Ty=ColumnConstraint,
+              T=std::vector<ColumnConstraint,std::allocator<ColumnConstraint>>
+          ]

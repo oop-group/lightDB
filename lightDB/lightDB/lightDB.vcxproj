@@ -117,6 +117,7 @@
   <ItemGroup>
     <ClCompile Include="core\column.cpp" />
     <ClCompile Include="core\table.cpp" />
+    <ClCompile Include="core\utils.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>

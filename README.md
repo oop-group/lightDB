@@ -12,5 +12,7 @@ A very weak light DB for oop.
 
 问题：<br/>
 1、search返回的结构过于复杂，可以包装成一个优雅的Record类，表示一行；vector<Record>表示一次查询返回的所有的记录<br/>
-2、约束<br/>
+2、约束：这可得好好想想<br/>
+3、专门建一个文件，将指针用typedef的方式美化，不要满屏*乱飞<br/>
+4、构造函数里最好不要出现vector，可以用传入任意数量参数的构造函数来初始化Column,Table等类
 

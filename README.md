@@ -22,12 +22,14 @@ A very weak light DB for oop.
   
   
  ## 如何解析SQL语句：
- 构造一个action_map:string->函数指针
+ 构造一个action_map:string->函数指针<br/>
  Action类：根据select xxx from xxx这样的语句构造；根据命令的种类分支出不同的子类(SelectAction等）<br/>
  string：命令名称，如'select','update'<br/>
+ Case对象：根据不同的操作符（如>,=）衍生出不同的子类<br/>
  函数指针：select，构造一个Action对象并返回其指针<br/>
  1、读入字符串statement<br/>
  2、按按照where将语句分成2份，前一份为statement[0],后一份为statement[1]<br/>
- 3、前一半为select id,name from stu，按照空格分开得到数组statement1<br/>
- 4、function=action_map['select'] action=function(statement) 一个SelectAction类的指针<br/>
-
+ 3、前一半为select id,name from stu，按照空格分开得到数组statement0<br/>
+ 4、function=action_map['select'] action=function(statement0) 一个SelectAction类的指针<br/>
+ 5、根据statement[1]构造一个判断类对象Case,将其作为Action的成员<br/>
+ 6、将这个Action指针作为参数，执行execute函数，解析这个对象<br/>

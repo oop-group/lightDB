@@ -32,4 +32,49 @@ A very weak light DB for oop.
  3、前一半为select id,name from stu，按照空格分开得到数组statement0<br/>
  4、function=action_map['select'] action=function(statement0) 一个SelectAction类的指针<br/>
  5、根据statement[1]构造一个判断类对象Case,将其作为Action的成员<br/>
- 6、将这个Action指针作为参数，执行execute函数，解析这个对象<br/>
+ 6、将这个Action指针作为参数，执行execute函数<br/>
+ 7、在execute中通过action.type访问命令类型，如'select'。构造一个string->function ptr的map，将'select'映射到select函数，并传入action作为参数；返回select(action.table,action.data)。<br/>
+ 8、select(action.table,action.data)相当于table.search(data)，高层调用底层<br/>
+ ### 总结一下：
+ {}表示变量类型<br/>
+ input {string} str<br/>
+ {Engine(调度类，全局唯一)}engine.run()<br/>
+ split str by 'where'<br/>
+ {Action*} action=parse(str[0])<br/>
+ for colname,symbol,value in str[1]:<br/>
+     action.addCondition(colname,{Case(判断类)}(symbol,Data(value)))<br/>
+ if action.type=='select':</br>
+     vector<{Record}> result=actionMap{action.type}(action)(记住actionMap把字符串映射到函数指针)<br/>
+     如果函数指针用不了，就写一个函数类，即重载（）的类<br/>
+ else:<br/>
+     actionMap[action.type](action)   增删改都不需要返回值<br/>
+ actionMap['update']=this->update<br/>
+ update(action):<br/>
+     action.table.update(action.data,action.conditions><br/>
+ [Table].update(data,conditions):<br/>(记住conditions是一对对[列名：Case]，参见上文的addCondition函数)<br/>
+     match_idx=parse_conditions(conditions)<br/>
+     this->getcolumn(data.name)->modify(match_idx,data.data)<br/>
+     data可以是一对对[列名：vector<Data*>]，也可以就是一个vector<Data*>，然后再update中再传一个参数vector<string> names<br/>
+  
+  parse_conditions(conditions):<br/>
+      if conditions.size()=0:return [0,rows-1] <br/>
+      for name in conditions.names:<br/>
+          for idx in [0,rows-1]:<br/>
+              if case(this->getcolumn(name)->getdata(idx))==True:<br/>
+                  match_idx.append(idx)<br/>
+       return match_idx <br/>
+       
+  Case对象：<br/>
+       operator()(data) return symbol_map[this->symbol](data,this->condition)<br/>
+  symbol_map把一个字符串映射成一个返回true or flase的函数<br/>
+  例如：symbol_map['=']=equal
+  bool equal(data,condition){return data==condition;}<br/>
+  this->symbol是一个操作符，例如>,=<br/>
+  data:{Data}<br/>
+  this->condition:{Data}<br/>
+ 详见addCondition中的Case对象构造过程。<br/>
+ 如果函数指针不会写的话，就if-else或者函数类<br/>
+ 
+ 
+ 
+ 

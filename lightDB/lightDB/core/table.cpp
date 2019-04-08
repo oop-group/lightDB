@@ -2,25 +2,25 @@
 #include "table.h"
 
 int Table::getColumnLength(string name) {
-	return columnObjs[name].length();
+	return columnObjs[name]->length();
 }
 
 
 /*
 		添加新的一列
 	*/
-void Table::addColumn(string name, Column& c) {
+void Table::addColumn(string name, pColumn c) {
 	/*	
 		如果原表有列且加入的列非空，判断是否等长
 		如果加入的列空，填充默认数据
 		如果原表没有列，修改rows
 	*/
 	if (cols() > 0) {
-		if (c.length() > 0) {
-			if (length() != c.length()) return;
+		if (c->length() > 0) {
+			if (length() != c->length()) return;
 		}
 	}
-	else rows = c.length();
+	else rows = c->length();
 	//添加新的键值对
 	auto iter = columnObjs.find(name);
 	if (iter == columnObjs.end()) {
@@ -32,14 +32,14 @@ void Table::addColumn(string name, Column& c) {
 /*
 	返回指定字段名的对象
 */
-Column & Table::getColumn(const string & name){
+pColumn Table::getColumn(const string & name){
 	return columnObjs[name];
 }
 
 /*
 	查
 */
-vector<vector<pair<string, Data*>>> Table::search(vector<string> colNames)
+vector<Record> Table::search(vector<string> colNames)
 {
 	if (colNames[0] == "*") colNames = names;	//选择全部列
 	for (auto iter = colNames.begin(); iter != colNames.end(); iter++) {
@@ -48,17 +48,17 @@ vector<vector<pair<string, Data*>>> Table::search(vector<string> colNames)
 		}
 	}	//除掉不在表中的字段名
 
-	vector<vector<pair<string, Data*>>> rets;	
+	vector<Record> rets;	
 	vector<int> matchIdx;				//符合条件的下标
 	/*
 		TODO:选择条件
 	*/
 	for (int i = 0; i < rows; i++) matchIdx.push_back(i);
 	for (auto i : matchIdx) {
-		vector<pair<string, Data*>> ret;
+		Record ret;
 		for (auto colName:colNames) {
 			auto p = columnObjs[colName];
-			ret.push_back(make_pair(colName,p.getData(i)));
+			ret.push_back(make_pair(colName,p->getData(i)));
 		}
 		rets.push_back(ret);
 	}
@@ -83,7 +83,7 @@ void Table::del() {
 			if (idx > tmp) {
 				idx -= cnt;
 			}
-			getColumn(name).del(idx);
+			getColumn(name)->del(idx);
 			cnt++;
 		}
 	}
@@ -93,7 +93,7 @@ void Table::del() {
 /*
 	改
 */
-void Table::update(map<string,Data*>& datas) {
+void Table::update(map<string,pData>& datas) {
 	vector<int> matchIdx;
 	/*
 		TODO:根据条件选出matchIdx
@@ -103,8 +103,8 @@ void Table::update(map<string,Data*>& datas) {
 		auto iter = datas.begin();
 		while (iter != datas.end()) {
 			string name = iter->first;
-			Data* data = iter->second;
-			getColumn(name).modify(i, data);
+			pData data = iter->second;
+			getColumn(name)->modify(i, data);
 			iter++;
 		}
 	}
@@ -113,12 +113,12 @@ void Table::update(map<string,Data*>& datas) {
 /*
 	增
 */
-void Table::insert(map<string, Data*>& datas) {
+void Table::insert(map<string, pData>& datas) {
 	auto iter = datas.begin();
 	while (iter != datas.end()) {
 		string name = iter->first;
-		Data* data = iter->second;
-		columnObjs[name].add(data);
+		pData data = iter->second;
+		columnObjs[name]->add(data);
 		iter++;
 	}
 	rows++;

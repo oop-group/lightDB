@@ -1,19 +1,15 @@
 ﻿  column.cpp
-d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\core\column.h(23): warning C4267: “return”: 从“size_t”转换到“int”，可能丢失数据
+d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\core\column.h(24): warning C4267: “return”: 从“size_t”转换到“int”，可能丢失数据
 d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\core\column.cpp(5): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
   table.cpp
-d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\core\column.h(23): warning C4267: “return”: 从“size_t”转换到“int”，可能丢失数据
+d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\core\column.h(24): warning C4267: “return”: 从“size_t”转换到“int”，可能丢失数据
 d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\core\table.h(24): warning C4267: “return”: 从“size_t”转换到“int”，可能丢失数据
-  utils.cpp
-d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\core\utils.cpp(5): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
-d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\core\utils.cpp(35): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
-d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\core\utils.cpp(63): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
   main.cpp
-d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\core\column.h(23): warning C4267: “return”: 从“size_t”转换到“int”，可能丢失数据
+d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\core\column.h(24): warning C4267: “return”: 从“size_t”转换到“int”，可能丢失数据
 d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\core\table.h(24): warning C4267: “return”: 从“size_t”转换到“int”，可能丢失数据
   正在生成代码
-  25 of 884 functions ( 2.8%) were compiled, the rest were copied from previous compilation.
-    1 functions were new in current compilation
-    22 functions had inline decision re-evaluated but remain unchanged
+  0 of 829 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
   已完成代码的生成
   lightDB.vcxproj -> D:\courses\this_semester\oop\homework\big_work\lightDB\lightDB\x64\Release\lightDB.exe

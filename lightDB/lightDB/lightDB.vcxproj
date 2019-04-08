@@ -124,6 +124,7 @@
     <ClInclude Include="core\column.h" />
     <ClInclude Include="core\table.h" />
     <ClInclude Include="core\utils.h" />
+    <ClInclude Include="rename\rename.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

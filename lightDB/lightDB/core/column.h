@@ -3,6 +3,7 @@
 #include <vector>
 #include <string>
 #include "utils.h"
+#include "../rename/rename.h"
 
 using namespace std;
 
@@ -13,7 +14,7 @@ class Column {
 	ColumnType type;						//数据类型
 protected:
 	vector<ColumnConstraint> constraints;	//约束类型
-	vector<Data*> values;
+	vector<pData> values;
 public:
 	Column(const ColumnType& ts, const vector<ColumnConstraint>& cs);
 	Column(){}
@@ -26,7 +27,7 @@ public:
 	/*
 		增
 	*/
-	void add(Data* data) {
+	void add(pData data) {
 		values.push_back(data);
 		//rows++;
 	}
@@ -44,7 +45,7 @@ public:
 	/*
 		改
 	*/
-	void modify(int index, Data* value) {
+	void modify(int index, pData value) {
 		values[index] = value;
 	}
 	/*

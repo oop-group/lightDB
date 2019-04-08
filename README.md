@@ -42,9 +42,9 @@ A very weak light DB for oop.
  split str by 'where'<br/>
  {Action*} action=parse(str[0])<br/>
  for colname,symbol,value in str[1]:<br/>
- >>>>action.addCondition(colname,{Case(判断类)}(symbol,Data(value)))<br/>
+ &nbsp;action.addCondition(colname,{Case(判断类)}(symbol,Data(value)))<br/>
  if action.type=='select':</br>
- >>>>vector<{Record}> result=actionMap{action.type}(action)(记住actionMap把字符串映射到函数指针)<br/>
+ &nbsp;vector<{Record}> result=actionMap{action.type}(action)(记住actionMap把字符串映射到函数指针)<br/>
      如果函数指针用不了，就写一个函数类，即重载（）的类<br/>
  else:<br/>
      actionMap[action.type](action)   增删改都不需要返回值<br/>

@@ -4,6 +4,18 @@
 # lightDB
 A very weak light DB for oop.
 
+## 重要：Database需要实现的的主要功能
+在core文件夹下新建一个database.h和database.cpp文件<br/>
+建立class Database<br/>
+createTable<br/>
+dropTable<br/>
+getTable<br/>
+序列化和反序列化<br/>
+快照<br/>
+其他你认为重要的功能...<br/>
+**不要修改别的文件！！！！！<br/>
+
+
 4.5 做了个字段类，顺便写了一个没什么用的单元测试。
 接下来打算做数据表类：一堆字段类的组合。
 错误处理什么的都没做，假设使用者输入的都是非恶意的数据。<br>

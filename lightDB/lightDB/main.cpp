@@ -2,10 +2,11 @@
 #include <string>
 #include "core/column.h"
 #include "core/table.h"
+#include "controller/engine.h"
 using namespace std;
 
 int main() {
-	Table t;
+	/*Table t;
 	Column ic(ColumnType::INT, vector<ColumnConstraint>{});
 	ic.add(new Data(3));
 	ic.add(new Data(4));
@@ -27,7 +28,8 @@ int main() {
 	map<string, pData> data1;
 	data1["id"] = new Data(456);
 	data1["name"] = new Data("chenjunhai");
-	t.insert(data1);
+	t.insert(data1);*/
+	Engine().run();
 	system("pause");
 	return 0;
 }

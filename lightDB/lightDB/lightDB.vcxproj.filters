@@ -27,6 +27,21 @@
     <ClCompile Include="core\utils.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="controller\engine.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="core\database.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="parser\parser.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="parser\action.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="parser\mystring.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core\column.h">
@@ -39,6 +54,21 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="rename\rename.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="controller\engine.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="core\database.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="parser\parser.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="parser\action.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="parser\mystring.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

@@ -115,15 +115,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="controller\engine.cpp" />
     <ClCompile Include="core\column.cpp" />
+    <ClCompile Include="core\database.cpp" />
     <ClCompile Include="core\table.cpp" />
     <ClCompile Include="core\utils.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="parser\action.cpp" />
+    <ClCompile Include="parser\mystring.cpp" />
+    <ClCompile Include="parser\parser.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="controller\engine.h" />
     <ClInclude Include="core\column.h" />
+    <ClInclude Include="core\database.h" />
     <ClInclude Include="core\table.h" />
     <ClInclude Include="core\utils.h" />
+    <ClInclude Include="parser\action.h" />
+    <ClInclude Include="parser\mystring.h" />
+    <ClInclude Include="parser\parser.h" />
     <ClInclude Include="rename\rename.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

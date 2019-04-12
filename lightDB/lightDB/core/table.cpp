@@ -7,13 +7,13 @@ int Table::getColumnLength(string name) {
 
 
 /*
-		Ìí¼ÓĞÂµÄÒ»ÁĞ
+		æ·»åŠ æ–°çš„ä¸€åˆ—
 	*/
 void Table::addColumn(string name, pColumn c) {
-	/*	
-		Èç¹ûÔ­±íÓĞÁĞÇÒ¼ÓÈëµÄÁĞ·Ç¿Õ£¬ÅĞ¶ÏÊÇ·ñµÈ³¤
-		Èç¹û¼ÓÈëµÄÁĞ¿Õ£¬Ìî³äÄ¬ÈÏÊı¾İ
-		Èç¹ûÔ­±íÃ»ÓĞÁĞ£¬ĞŞ¸Ärows
+	/*
+		å¦‚æœåŸè¡¨æœ‰åˆ—ä¸”åŠ å…¥çš„åˆ—éç©ºï¼Œåˆ¤æ–­æ˜¯å¦ç­‰é•¿
+		å¦‚æœåŠ å…¥çš„åˆ—ç©ºï¼Œå¡«å……é»˜è®¤æ•°æ®
+		å¦‚æœåŸè¡¨æ²¡æœ‰åˆ—ï¼Œä¿®æ”¹rows
 	*/
 	if (cols() > 0) {
 		if (c->length() > 0) {
@@ -21,7 +21,7 @@ void Table::addColumn(string name, pColumn c) {
 		}
 	}
 	else rows = c->length();
-	//Ìí¼ÓĞÂµÄ¼üÖµ¶Ô
+	//æ·»åŠ æ–°çš„é”®å€¼å¯¹
 	auto iter = columnObjs.find(name);
 	if (iter == columnObjs.end()) {
 		columnObjs[name] = c;
@@ -30,28 +30,28 @@ void Table::addColumn(string name, pColumn c) {
 }
 
 /*
-	·µ»ØÖ¸¶¨×Ö¶ÎÃûµÄ¶ÔÏó
+	è¿”å›æŒ‡å®šå­—æ®µåçš„å¯¹è±¡
 */
 pColumn Table::getColumn(const string & name){
 	return columnObjs[name];
 }
 
 /*
-	²é
+	æŸ¥
 */
 vector<Record> Table::search(vector<string> colNames)
 {
-	if (colNames[0] == "*") colNames = names;	//Ñ¡ÔñÈ«²¿ÁĞ
+	if (colNames[0] == "*") colNames = names;	//é€‰æ‹©å…¨éƒ¨åˆ—
 	for (auto iter = colNames.begin(); iter != colNames.end(); iter++) {
 		if (columnObjs.find(*iter) == columnObjs.end()) {
 			iter = colNames.erase(iter);
 		}
-	}	//³ıµô²»ÔÚ±íÖĞµÄ×Ö¶ÎÃû
+	}	//é™¤æ‰ä¸åœ¨è¡¨ä¸­çš„å­—æ®µå
 
-	vector<Record> rets;	
-	vector<int> matchIdx;				//·ûºÏÌõ¼şµÄÏÂ±ê
+	vector<Record> rets;
+	vector<int> matchIdx;				//ç¬¦åˆæ¡ä»¶çš„ä¸‹æ ‡
 	/*
-		TODO:Ñ¡ÔñÌõ¼ş
+		TODO:é€‰æ‹©æ¡ä»¶
 	*/
 	for (int i = 0; i < rows; i++) matchIdx.push_back(i);
 	for (auto i : matchIdx) {
@@ -66,11 +66,11 @@ vector<Record> Table::search(vector<string> colNames)
 }
 
 /*
-	É¾
+	åˆ 
 */
 void Table::del() {
 	/*
-		TODO:°´ÕÕÌõ¼şÑ¡ÔñÏàÓ¦µÄĞĞ
+		TODO:æŒ‰ç…§æ¡ä»¶é€‰æ‹©ç›¸åº”çš„è¡Œ
 	*/
 	vector<int> matchIdx;
 	for (int i = 0; i < rows; i++) matchIdx.push_back(i);
@@ -87,16 +87,16 @@ void Table::del() {
 			cnt++;
 		}
 	}
-	rows = getColumnLength(names[0]);		//¸üĞÂ¼ÇÂ¼Êı
+	rows = getColumnLength(names[0]);		//æ›´æ–°è®°å½•æ•°
 }
 
 /*
-	¸Ä
+	æ”¹
 */
 void Table::update(map<string,pData>& datas) {
 	vector<int> matchIdx;
 	/*
-		TODO:¸ù¾İÌõ¼şÑ¡³ömatchIdx
+		TODO:æ ¹æ®æ¡ä»¶é€‰å‡ºmatchIdx
 	*/
 	for (int i = 0; i < rows; i++) matchIdx.push_back(i);
 	for (auto i : matchIdx) {
@@ -111,7 +111,7 @@ void Table::update(map<string,pData>& datas) {
 }
 
 /*
-	Ôö
+	å¢
 */
 void Table::insert(map<string, pData>& datas) {
 	auto iter = datas.begin();
@@ -122,4 +122,39 @@ void Table::insert(map<string, pData>& datas) {
 		iter++;
 	}
 	rows++;
+}
+/*
+    Tableç¼–ç æ–¹å¼ï¼ˆæŒ‰byteï¼‰
+    [0-3]å­˜å‚¨è¡¨çš„åˆ—æ•°cols
+    ä¹‹åcolsä¸ªname-Columnçš„å¯¹ï¼Œå…ˆç”¨ä¸¤ä¸ª4byteåˆ†åˆ«å­˜å‚¨nameå’ŒColumnçš„æ•°æ®é•¿åº¦ï¼Œå†é¡ºæ¬¡å­˜å‚¨äºŒè€…æ•°æ®
+*/
+string Table::Serialize(){
+    string s;
+    s_int cols(names.size());
+    s+=cols.Serialize();
+    for(int i=0;i<names.size();i++){
+        string name(names[i]);
+        s_int nameLength(name.size());
+        string column=columnObjs[name]->Serialize();
+        s_int colmnLength(column.size());
+        s+=nameLength.Serialize();
+        s+=colmnLength.Serialize();
+        s+=name;
+        s+=column;
+    }
+    return s;
+}
+pTable Table::Deserialize(const string& content){
+    pTable table=new Table;
+    int cols=*s_int::Deserialize(content.substr(0,4));
+    int point=4;
+    for(int i=0;i<cols;i++){
+        int nameLength=*s_int::Deserialize(content.substr(point,4));
+        int colmnLength=*s_int::Deserialize(content.substr(point+4,4));
+        string name=content.substr(point+8,nameLength);
+        pColumn column=Column::Deserialize(content.substr(point+8+nameLength,colmnLength));
+        table->addColumn(name,column);
+        point+=8+nameLength+colmnLength;
+    }
+    return table;
 }

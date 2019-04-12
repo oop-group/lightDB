@@ -1,15 +1,21 @@
 #pragma once
 
-#include <string>
+#include <iostream>
+#include <string.h>
+#include "../rename/rename.h"
+#include "../os/serializable.h"
+#include "../os/s_char.h"
+#include "../os/s_double.h"
+#include "../os/s_int.h"
 
 using namespace std;
 
 /*
-	Ò»Ğ©³£ÓÃµÄ¹¦ÄÜÀàºÍº¯Êı
+	ä¸€äº›å¸¸ç”¨çš„åŠŸèƒ½ç±»å’Œå‡½æ•°
 */
 
 /*
-	×Ö¶ÎÖ§³ÖµÄÊı¾İÀàĞÍ¼¯ºÏ
+	å­—æ®µæ”¯æŒçš„æ•°æ®ç±»å‹é›†åˆ
 */
 enum class ColumnType {
 	INT,
@@ -18,22 +24,22 @@ enum class ColumnType {
 };
 
 /*
-	×Ö¶ÎÔ¼Êø
+	å­—æ®µçº¦æŸ
 */
 enum class ColumnConstraint {
-	NOT_NULL,	//·Ç¿ÕÔ¼Êø
-	YES_NULL,		//¿ÕÔ¼Êø
-	UNIQUE,		//Î¨Ò»Ô¼Êø
-	INCREMENT,	//×ÔÔöÔ¼Êø
-	PRIMARY,	//Ö÷¼üÔ¼Êø
+	NOT_NULL,	//éç©ºçº¦æŸ
+	YES_NULL,		//ç©ºçº¦æŸ
+	UNIQUE,		//å”¯ä¸€çº¦æŸ
+	INCREMENT,	//è‡ªå¢çº¦æŸ
+	PRIMARY,	//ä¸»é”®çº¦æŸ
 };
 
 /*
-	Êı¾İ±íÖĞÒ»¸ñ³ÆÎªÒ»¸öData
-	Ö§³ÖÈÎÒâÀàĞÍµÄÊı¾İ
-	ÈçData(3)±íÊ¾ÕûÊı£¬Data(2.4)±íÊ¾¸¡µãÊı
+	æ•°æ®è¡¨ä¸­ä¸€æ ¼ç§°ä¸ºä¸€ä¸ªData
+	æ”¯æŒä»»æ„ç±»å‹çš„æ•°æ®
+	å¦‚Data(3)è¡¨ç¤ºæ•´æ•°ï¼ŒData(2.4)è¡¨ç¤ºæµ®ç‚¹æ•°
 */
-class Data {
+class Data: public Serializable{
 	ColumnType type;
 	int charLen;
 	union {
@@ -54,6 +60,8 @@ public:
 	double getDoubleV() const{ return doubleV; }
 	char* getCharV() const{ return charV; }
 	ColumnType getType() const{ return type; }
+	string Serialize();
+	static pData Deserialize(const string& content);
 };
 
 

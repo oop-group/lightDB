@@ -4,52 +4,53 @@
 #include <string>
 #include "utils.h"
 #include "../rename/rename.h"
+#include "../os/serializable.h"
 
 using namespace std;
 
 /*
-	Ò»ÁĞÊÓÎªÒ»Àà£¬º¬ÓĞ×Ö¶ÎÃû¡¢Êı¾İÀàĞÍµÈ³ÉÔ±
+	ä¸€åˆ—è§†ä¸ºä¸€ç±»ï¼Œå«æœ‰å­—æ®µåã€æ•°æ®ç±»å‹ç­‰æˆå‘˜
 */
-class Column {
-	ColumnType type;						//Êı¾İÀàĞÍ
+class Column: public Serializable{
+	ColumnType type;						//æ•°æ®ç±»å‹
 protected:
-	vector<ColumnConstraint> constraints;	//Ô¼ÊøÀàĞÍ
+	vector<ColumnConstraint> constraints;	//çº¦æŸç±»å‹
 	vector<pData> values;
 public:
 	Column(const ColumnType& ts, const vector<ColumnConstraint>& cs);
 	Column(){}
 	/*
-		£¨¿ÉÄÜÃ»ÓÃµÄ£©Ë½ÓĞ³ÉÔ±·ÃÎÊ½Ó¿Ú
+		ï¼ˆå¯èƒ½æ²¡ç”¨çš„ï¼‰ç§æœ‰æˆå‘˜è®¿é—®æ¥å£
 	*/
 	int length() const { return values.size(); }
 	vector<ColumnConstraint> getConstraints() const{ return constraints; }
 	ColumnType getType() const{ return type; }
 	/*
-		Ôö
+		å¢
 	*/
 	void add(pData data) {
 		values.push_back(data);
 		//rows++;
 	}
 	/*
-		É¾
+		åˆ 
 	*/
 	void del(int index) {
 		values.erase(values.begin() + index);
 		//rows--;
 	}
 	/*
-		²é
+		æŸ¥
 	*/
-	Data* getData(int index) const { return values[index]; }
+	pData getData(int index) const { return values[index]; }
 	/*
-		¸Ä
+		æ”¹
 	*/
 	void modify(int index, pData value) {
 		values[index] = value;
 	}
 	/*
-		´òÓ¡
+		æ‰“å°
 	*/
 	friend ostream& operator<<(ostream& out, const Column& c) {
 		int len = c.length();
@@ -58,5 +59,7 @@ public:
 		}
 		return out;
 	}
+	string Serialize();
+    static pColumn Deserialize(const string& content);
 };
 

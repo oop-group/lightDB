@@ -3,18 +3,20 @@
 #include <map>
 #include "column.h"
 #include "../rename/rename.h"
+#include "../os/serializable.h"
 
 using namespace std;
 
 /*
-	Êı¾İ±íÀà
-	ÒÔÁĞÃûÎªkey£¬ÁĞ¶ÔÏóÎªvalue£¬°´ÕÕ×Öµä¸ñÊ½´æ´¢±íÖĞËùÓĞÁĞ
+	æ•°æ®è¡¨ç±»
+	ä»¥åˆ—åä¸ºkeyï¼Œåˆ—å¯¹è±¡ä¸ºvalueï¼ŒæŒ‰ç…§å­—å…¸æ ¼å¼å­˜å‚¨è¡¨ä¸­æ‰€æœ‰åˆ—
 */
-class Table {
-	map<string, pColumn> columnObjs;	//ÁĞÃû-ÁĞ¶ÔÏó
-	int rows;							//ĞĞÊı
-	vector<string> names;				//°´ÕÕ²åÈëË³Ğò±£´æÁĞÃû³Æ
-	int getColumnLength(string name);	//Ö¸¶¨Ãû³ÆÁĞµÄ¼ÇÂ¼Êı
+class Table: public Serializable{
+	map<string, pColumn> columnObjs;	//åˆ—å-åˆ—å¯¹è±¡
+	int rows;							//è¡Œæ•°
+	vector<string> names;				//æŒ‰ç…§æ’å…¥é¡ºåºä¿å­˜åˆ—åç§°
+
+	int getColumnLength(string name);	//æŒ‡å®šåç§°åˆ—çš„è®°å½•æ•°
 public:
 	Table() :rows(0) {}
 
@@ -24,10 +26,12 @@ public:
 	int cols() { return columnObjs.size(); }
 
 	/*
-		ÔöÉ¾²é¸Ä
+		å¢åˆ æŸ¥æ”¹
 	*/
 	vector<vector<pair<string,Data*>>> search(vector<string> colNames);
 	void del();
 	void update(map<string,Data*>& datas);
 	void insert(map<string, Data*>& datas);
+	string Serialize();
+	static pTable Deserialize(const string& content);
 };

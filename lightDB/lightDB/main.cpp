@@ -5,6 +5,7 @@
 #include "core/table.h"
 #include "core/database.h"
 #include "os/s_int.h"
+#include "controller/engine.h"
 using namespace std;
 
 int main() {
@@ -48,6 +49,8 @@ int main() {
     for(ColumnConstraint con: cons){
         cout<<"约束"<<static_cast<int>(con)<<endl;
     }
+	
+	Engine().run();
 	system("pause");
 	return 0;
 }

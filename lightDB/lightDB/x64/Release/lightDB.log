@@ -1,14 +1,17 @@
 ﻿  engine.cpp
-  action.cpp
   parser.cpp
-d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\parser\parser.cpp(96): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
-d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\parser\parser.cpp(97): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
-d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\parser\parser.cpp(102): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
-d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\parser\parser.cpp(103): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
-d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\parser\parser.cpp(107): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\parser\parser.cpp(47): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\parser\parser.cpp(54): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
+d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\parser\parser.cpp(90): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\parser\parser.cpp(108): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\parser\parser.cpp(156): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\parser\parser.cpp(159): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\parser\parser.cpp(165): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
+d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\parser\parser.cpp(166): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
+d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\parser\parser.cpp(170): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
   正在生成代码
-  22 of 549 functions ( 4.0%) were compiled, the rest were copied from previous compilation.
-    7 functions were new in current compilation
-    33 functions had inline decision re-evaluated but remain unchanged
+  21 of 798 functions ( 2.6%) were compiled, the rest were copied from previous compilation.
+    12 functions were new in current compilation
+    9 functions had inline decision re-evaluated but remain unchanged
   已完成代码的生成
   lightDB.vcxproj -> D:\courses\this_semester\oop\homework\big_work\lightDB\lightDB\x64\Release\lightDB.exe

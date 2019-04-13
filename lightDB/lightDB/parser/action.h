@@ -10,13 +10,16 @@ using namespace std;
 	根据SQL语句解析结果返回的动作
 */
 class Action {
+protected:
 	string type;			//"search","update",etc
 	string table;
+	map<string, pCase> conditions;
 public:
 	void setType(string s) { type = s; }
 	string getType() { return type; }
 	void setTable(string t) { table = t; }
 	string getTable() { return table; }
+	void addCondition(string colname, pCase c);
 };
 
 class SelectAction :public Action {

@@ -29,6 +29,42 @@ vector<string> split(string& str, string seperator) {
 	return ret;
 }
 
+/*
+	多个分割字符
+*/
+vector<string> multipleSplit(string& str, vector<string>& seperators) {
+	vector<string> ret;
+	int len = str.size();
+	int ssize = seperators.size();
+	int last = -1;	//上一个match片段的最后一个字符在str中的下标
+	for (int i = 0; i < len; i++) {
+		for (int k = 0; k < ssize; k++) {		//检查和第k个分隔符是否匹配
+			bool anyMatch = false;				//有一个分隔符匹配即置为true
+			string seperator = seperators[k];
+			int slen = seperator.size();
+			if (str[i] == seperator[0]) {
+				bool match = true;
+				for (int j = 1; j < slen; j++) {
+					if (seperator[j] != str[i + j]) {
+						match = false;
+						break;
+					}
+				}
+				if (match == true) {
+					ret.push_back(str.substr(last + 1, i - 1 - last));
+					last = i + slen - 1;
+					i += slen - 1;
+					anyMatch = true;
+					break;
+				}
+			}
+		}
+	}
+	ret.push_back(str.substr(last + 1, len - 1 - last));
+	return ret;
+}
+
+
 /*	
 	将字符串改为大写
 */

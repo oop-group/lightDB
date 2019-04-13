@@ -42,6 +42,15 @@
     <ClCompile Include="parser\mystring.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="os\s_char.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="os\s_double.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="os\s_int.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core\column.h">
@@ -69,6 +78,18 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="parser\mystring.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="os\s_char.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="os\s_double.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="os\s_int.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="os\serializable.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

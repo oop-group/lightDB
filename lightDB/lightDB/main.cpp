@@ -1,7 +1,9 @@
 #include <iostream>
 #include <string>
 #include "core/column.h"
+#include "core/database.h"
 #include "core/table.h"
+#include "core/utils.h"
 #include "controller/engine.h"
 using namespace std;
 
@@ -29,6 +31,7 @@ int main() {
 	data1["id"] = new Data(456);
 	data1["name"] = new Data("chenjunhai");
 	t.insert(data1);*/
+	//pData data = new Data(3);
 	Engine().run();
 	system("pause");
 	return 0;

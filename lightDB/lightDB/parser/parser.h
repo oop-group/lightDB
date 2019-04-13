@@ -11,7 +11,10 @@ using namespace std;
 */
 class Parser {
 private:
-	static Action* select(vector<string>& statement);
+	static Action* select(vector<string>& statement,string& str);
+	static Action* update(vector<string>& statement,string& str);
+	static Action* del(vector<string>& statement,string& str);
+	static Action* insert(vector<string>& statement,string& str);
 	map<string, pActionFunc> actionMap;
 public:
 	Parser();

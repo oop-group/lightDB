@@ -106,7 +106,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <SDLCheck>true</SDLCheck>
+      <SDLCheck>false</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
@@ -121,6 +121,9 @@
     <ClCompile Include="core\table.cpp" />
     <ClCompile Include="core\utils.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="os\s_char.cpp" />
+    <ClCompile Include="os\s_double.cpp" />
+    <ClCompile Include="os\s_int.cpp" />
     <ClCompile Include="parser\action.cpp" />
     <ClCompile Include="parser\mystring.cpp" />
     <ClCompile Include="parser\parser.cpp" />
@@ -131,6 +134,10 @@
     <ClInclude Include="core\database.h" />
     <ClInclude Include="core\table.h" />
     <ClInclude Include="core\utils.h" />
+    <ClInclude Include="os\serializable.h" />
+    <ClInclude Include="os\s_char.h" />
+    <ClInclude Include="os\s_double.h" />
+    <ClInclude Include="os\s_int.h" />
     <ClInclude Include="parser\action.h" />
     <ClInclude Include="parser\mystring.h" />
     <ClInclude Include="parser\parser.h" />

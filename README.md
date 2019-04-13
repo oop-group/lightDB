@@ -7,7 +7,10 @@ A very weak light DB for oop.
 ## 重要：Database中有一处错误
 erase的方法不对，有空就改。<br/>
 
-## 重要：Database需要实现的的主要功能
+## 重要：不安全的拷贝函数strcpy
+先这么写着，以后统一改为strcpy_s<br/>
+
+Database需要实现的的主要功能
 在core文件夹下新建一个database.h和database.cpp文件<br/>
 建立class Database<br/>
 createTable<br/>

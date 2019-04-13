@@ -1,6 +1,12 @@
 #pragma once
 
-#include <string>
+#include <iostream>
+#include <string.h>
+#include "../rename/rename.h"
+#include "../os/serializable.h"
+#include "../os/s_char.h"
+#include "../os/s_double.h"
+#include "../os/s_int.h"
 
 using namespace std;
 
@@ -33,7 +39,7 @@ enum class ColumnConstraint {
 	支持任意类型的数据
 	如Data(3)表示整数，Data(2.4)表示浮点数
 */
-class Data {
+class Data: public Serializable{
 	ColumnType type;
 	int charLen;
 	union {
@@ -54,6 +60,8 @@ public:
 	double getDoubleV() const{ return doubleV; }
 	char* getCharV() const{ return charV; }
 	ColumnType getType() const{ return type; }
+	string Serialize();
+	static pData Deserialize(const string& content);
 };
 
 

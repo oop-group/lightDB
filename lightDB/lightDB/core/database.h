@@ -3,20 +3,24 @@
 #include <vector>
 #include <map>
 #include "table.h"
+#include "../rename/rename.h"
+#include "../os/serializable.h"
 
 using namespace std;
 /*
-    æ•°æ®åº“ç±»
+    Êı¾İ¿âÀà
 */
-class Database{
-    map<string,pTable> tableObjs; //è¡¨å-è¡¨å¯¹è±¡
-    vector<string> names;         //æŒ‰ç…§å»ºç«‹é¡ºåºä¿å­˜è¡¨å
+class Database: public Serializable{
+    map<string,pTable> tableObjs; //±íÃû-±í¶ÔÏó
+    vector<string> names;         //°´ÕÕ½¨Á¢Ë³Ğò±£´æ±íÃû
 
     public:
-    //ä¸€äº›ç§æœ‰æ¥å£
+    //Ò»Ğ©Ë½ÓĞ½Ó¿Ú
     int getSize() const {return names.size();}
 
     void createTable(string tablename, pTable table);
     void dropTable(const string& name);
     pTable getTable(const string& name);
+    string Serialize();
+    static pDatabase Deserialize(const string& content);
 };

@@ -4,13 +4,14 @@
 #include <string>
 #include "utils.h"
 #include "../rename/rename.h"
+#include "../os/serializable.h"
 
 using namespace std;
 
 /*
 	一列视为一类，含有字段名、数据类型等成员
 */
-class Column {
+class Column: public Serializable{
 	ColumnType type;						//数据类型
 protected:
 	vector<ColumnConstraint> constraints;	//约束类型
@@ -41,7 +42,7 @@ public:
 	/*
 		查
 	*/
-	Data* getData(int index) const { return values[index]; }
+	pData getData(int index) const { return values[index]; }
 	/*
 		改
 	*/
@@ -58,5 +59,7 @@ public:
 		}
 		return out;
 	}
+	string Serialize();
+    static pColumn Deserialize(const string& content);
 };
 

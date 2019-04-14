@@ -62,6 +62,13 @@ public:
 	ColumnType getType() const{ return type; }
 	string Serialize();
 	static pData Deserialize(const string& content);
+	bool operator==(const Data& d1);
+	bool operator!=(const Data& d1);
+	bool operator<(const Data& d1);
+	bool operator>(const Data& d1);
+	bool operator>=(const Data& d);
+	bool operator<=(const Data& d);
+
 };
 
 

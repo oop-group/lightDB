@@ -32,7 +32,15 @@ int main() {
 	data1["name"] = new Data("chenjunhai");
 	t.insert(data1);*/
 	//pData data = new Data(3);
-	Engine().run();
+	Engine engine;
+	Database d;
+	Table table;
+	table.addColumn("id", new Column(ColumnType::INT, vector<ColumnConstraint>{}));
+	table.addColumn("name", new Column(ColumnType::CHAR, vector<ColumnConstraint>{}));
+	table.addColumn("grade", new Column(ColumnType::DOUBLE, vector<ColumnConstraint>{}));
+	d.createTable("stu", &table);
+	engine.setCurrentDb(&d);
+	engine.run();
 	system("pause");
 	return 0;
 }

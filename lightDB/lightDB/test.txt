@@ -1,1 +1,4 @@
-select * from stu where id=3 and name = "linfangyun " and wage = 4900.3
+insert into stu (id,name,grade) values( 2018030040,  "xuliangqin", 8888)
+insert into stu(id, name,grade) values( 2016030040, "linfangyun ", 2333)
+insert into stu(id,name, grade) values( 2017030040," shenmingyuan", 6666)
+

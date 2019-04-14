@@ -1,17 +1,54 @@
 ﻿  engine.cpp
+d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\core\column.h(25): warning C4267: “return”: 从“size_t”转换到“int”，可能丢失数据
+d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\core\table.h(27): warning C4267: “return”: 从“size_t”转换到“int”，可能丢失数据
+d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\core\database.h(19): warning C4267: “return”: 从“size_t”转换到“int”，可能丢失数据
+  column.cpp
+d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\core\column.h(25): warning C4267: “return”: 从“size_t”转换到“int”，可能丢失数据
+d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\core\column.cpp(5): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\core\column.cpp(24): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
+d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\core\column.cpp(28): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
+  database.cpp
+d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\core\column.h(25): warning C4267: “return”: 从“size_t”转换到“int”，可能丢失数据
+d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\core\table.h(27): warning C4267: “return”: 从“size_t”转换到“int”，可能丢失数据
+d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\core\database.h(19): warning C4267: “return”: 从“size_t”转换到“int”，可能丢失数据
+d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\core\database.cpp(26): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
+d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\core\database.cpp(30): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
+d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\core\database.cpp(32): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
+  table.cpp
+d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\core\column.h(25): warning C4267: “return”: 从“size_t”转换到“int”，可能丢失数据
+d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\core\table.h(27): warning C4267: “return”: 从“size_t”转换到“int”，可能丢失数据
+d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\core\table.cpp(124): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
+d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\core\table.cpp(128): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
+d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\core\table.cpp(130): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
+  utils.cpp
+d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\core\utils.cpp(5): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
+d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\core\utils.cpp(35): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
+d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\core\utils.cpp(63): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
+  main.cpp
+d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\core\column.h(25): warning C4267: “return”: 从“size_t”转换到“int”，可能丢失数据
+d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\core\table.h(27): warning C4267: “return”: 从“size_t”转换到“int”，可能丢失数据
+d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\core\database.h(19): warning C4267: “return”: 从“size_t”转换到“int”，可能丢失数据
+  action.cpp
   parser.cpp
-d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\parser\parser.cpp(47): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
-d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\parser\parser.cpp(54): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
-d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\parser\parser.cpp(90): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
-d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\parser\parser.cpp(108): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
-d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\parser\parser.cpp(156): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
-d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\parser\parser.cpp(159): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
-d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\parser\parser.cpp(165): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
-d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\parser\parser.cpp(166): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
-d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\parser\parser.cpp(170): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\core\column.h(25): warning C4267: “return”: 从“size_t”转换到“int”，可能丢失数据
+d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\core\table.h(27): warning C4267: “return”: 从“size_t”转换到“int”，可能丢失数据
+d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\core\database.h(19): warning C4267: “return”: 从“size_t”转换到“int”，可能丢失数据
+d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\parser\parser.cpp(52): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\parser\parser.cpp(59): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
+d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\parser\parser.cpp(95): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\parser\parser.cpp(113): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\parser\parser.cpp(175): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\parser\parser.cpp(176): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
+d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\parser\parser.cpp(179): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\parser\parser.cpp(183): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\parser\parser.cpp(189): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
+d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\parser\parser.cpp(190): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
+d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\parser\parser.cpp(194): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
   正在生成代码
-  21 of 798 functions ( 2.6%) were compiled, the rest were copied from previous compilation.
-    12 functions were new in current compilation
-    9 functions had inline decision re-evaluated but remain unchanged
+d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\core\utils.cpp(155): warning C4715: “Data::operator==”: 不是所有的控件路径都返回值
+d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\core\utils.cpp(174): warning C4715: “Data::operator<”: 不是所有的控件路径都返回值
+  55 of 1625 functions ( 3.4%) were compiled, the rest were copied from previous compilation.
+    22 functions were new in current compilation
+    26 functions had inline decision re-evaluated but remain unchanged
   已完成代码的生成
   lightDB.vcxproj -> D:\courses\this_semester\oop\homework\big_work\lightDB\lightDB\x64\Release\lightDB.exe

@@ -39,7 +39,7 @@ pColumn Table::getColumn(const string & name){
 /*
 	查
 */
-vector<Record> Table::search(vector<string> colNames)
+vector<Record> Table::search(vector<string> colNames,map<string,pCase>& condition)
 {
 	if (colNames[0] == "*") colNames = names;	//选择全部列
 	for (auto iter = colNames.begin(); iter != colNames.end(); iter++) {
@@ -49,10 +49,7 @@ vector<Record> Table::search(vector<string> colNames)
 	}	//除掉不在表中的字段名
 
 	vector<Record> rets;
-	vector<int> matchIdx;				//符合条件的下标
-	/*
-		TODO:选择条件
-	*/
+	vector<int> matchIdx=parseConditions(condition);				//符合条件的下标
 	for (int i = 0; i < rows; i++) matchIdx.push_back(i);
 	for (auto i : matchIdx) {
 		Record ret;
@@ -68,11 +65,8 @@ vector<Record> Table::search(vector<string> colNames)
 /*
 	删
 */
-void Table::del() {
-	/*
-		TODO:按照条件选择相应的行
-	*/
-	vector<int> matchIdx;
+void Table::del(map<string,pCase>& condition) {
+	vector<int> matchIdx=parseConditions(condition);
 	for (int i = 0; i < rows; i++) matchIdx.push_back(i);
 	sort(matchIdx.begin(), matchIdx.end());
 	int cnt,tmp;
@@ -93,11 +87,8 @@ void Table::del() {
 /*
 	改
 */
-void Table::update(map<string,pData>& datas) {
-	vector<int> matchIdx;
-	/*
-		TODO:根据条件选出matchIdx
-	*/
+void Table::update(map<string,pData>& datas,map<string,pCase>& condition) {
+	vector<int> matchIdx=parseConditions(condition);
 	for (int i = 0; i < rows; i++) matchIdx.push_back(i);
 	for (auto i : matchIdx) {
 		auto iter = datas.begin();
@@ -157,4 +148,22 @@ pTable Table::Deserialize(const string& content){
         point+=8+nameLength+colmnLength;
     }
     return table;
+}
+
+/*
+	返回符合条件的下标数组
+	condition[columnName]=pCase
+*/
+vector<int> Table::parseConditions(map<string, pCase>& condition) {
+	vector<int> ret;
+	if (condition.size() == 0) {
+		for (int i = 0; i < rows; i++) ret.push_back(i);
+		return ret;
+	}
+	for (int i = 0; i < rows; i++) {
+		auto it = condition.begin();
+		while (it != condition.end()) {
+		}
+	}
+	return ret;
 }

@@ -6,10 +6,12 @@
 #include "parser.h"
 #include "mystring.h"
 #include "../core/utils.h"
+#include "../controller/engine.h"
 
 using namespace std;
 
-Parser::Parser() {
+Parser::Parser(Engine* e) {
+	engine = e;	
 	/*
 		指令-函数映射表
 	*/
@@ -37,10 +39,13 @@ pAction Parser::parse(string& input) {
 	istringstream is0(inputs[0]);
 	is0 >> actionType;
 	actionType = upper(actionType);
-	pAction action = actionMap[actionType](inputs[0]);
+	pAction action = actionMap[actionType](inputs[0],engine);
 	/*
 		解析条件子句，将其信息加入到action对象中
 	*/
+	if (inputs.size() == 1) {	//无条件
+		return action;
+	}
 	istringstream is1(inputs[1]);
 	vector<string> seperators{ "and", "or", "AND", "OR" };
 	vector<string> exprs = multipleSplit(inputs[1], seperators);
@@ -71,7 +76,7 @@ pAction Parser::parse(string& input) {
 	return action;
 }
 
-pAction Parser::select(string& str) {
+pAction Parser::select(string& str,pEngine engine) {
 	SelectAction* action = new SelectAction();
 	action->setType("search");		//命令名称	
 	istringstream is(str);
@@ -96,7 +101,7 @@ pAction Parser::select(string& str) {
 	return action;
 }
 
-pAction Parser::update(string& str) {
+pAction Parser::update(string& str,pEngine engine) {
 	UpdateAction* action = new UpdateAction();
 	action->setType("update");
 	string cmd, table,set;
@@ -126,8 +131,24 @@ pAction Parser::update(string& str) {
 			value = s2.substr(1, s2.size() - 1);
 		}
 	}
-
-	if (value.find('\'')!=string::npos || value.find('"')!=string::npos) {
+	auto colType = engine->getCurrentDb()->getTable(table)->getColumn(col)->getType();
+	value = strip(value);
+	switch (colType)
+	{
+	case ColumnType::CHAR:
+		value = value.substr(1, value.size() - 2);	//去掉引号
+		action->setData(col, new Data(value.c_str()));
+		break;
+	case ColumnType::DOUBLE:
+		action->setData(col, new Data(atof(value.c_str())));
+		break;
+	case ColumnType::INT:
+		action->setData(col, new Data(atoi(value.c_str())));
+		break;
+	default:
+		break;
+	}
+	/*if (value.find('\'')!=string::npos || value.find('"')!=string::npos) {
 		value = value.substr(1, value.size() - 2);
 		value = strip(value);
 		action->setData(col, new Data(value.c_str()));
@@ -136,14 +157,14 @@ pAction Parser::update(string& str) {
 		//先假设这是浮点数
 		double fvalue = atof(strip(value).c_str());
 		action->setData(col, new Data(fvalue));
-	}
+	}*/
 	return action;
 }
 
 /*
 	INSERT INTO oop_info(stu_id, stu_name) VALUES (2018011343, "a") 
 */
-pAction Parser::insert(string& str) {
+pAction Parser::insert(string& str,pEngine engine) {
 	InsertAction* action = new InsertAction();
 	action->setType("insert");
 	vector<string> tmp = split(str, "values");
@@ -151,10 +172,13 @@ pAction Parser::insert(string& str) {
 		tmp = split(str, "VALUES");
 	}
 	istringstream is(tmp[0]);
-	string cmd,expr;
-	is >> cmd >> cmd>>expr;	
+	int startInto = tmp[0].find("into");
+	if (startInto == string::npos) startInto = tmp[0].find("INTO");
+	string expr = tmp[0].substr(startInto + 5, tmp[0].size() - 5 - startInto);
+	expr = strip(expr);
 	int leftParenthesis = expr.find("(");
 	string table = expr.substr(0, leftParenthesis);
+	table = strip(table);
 	action->setTable(table);
 	int rightParenthesis = expr.find(")");
 	string colnamesStr = expr.substr(leftParenthesis + 1, rightParenthesis - leftParenthesis - 1);
@@ -169,13 +193,31 @@ pAction Parser::insert(string& str) {
 	filterSpace(values);							//["2018011343","a"]
 	for (int i = 0, len = colnames.size(); i < len; i++) {
 		string value = values[i];
-		if (value.find('\'') != string::npos || value.find('"') != string::npos) {
+		string col = colnames[i];
+		ColumnType colType = engine->getCurrentDb()->getTable(table)->getColumn(col)->getType();
+		value = strip(value);
+		switch (colType)
+		{
+		case ColumnType::CHAR:
+			value = value.substr(1, value.size() - 2);	//去掉引号
+			action->setData(col, new Data(value.c_str()));
+			break;
+		case ColumnType::DOUBLE:
+			action->setData(col, new Data(atof(value.c_str())));
+			break;
+		case ColumnType::INT:
+			action->setData(col, new Data(atoi(value.c_str())));
+			break;
+		default:
+			break;
+		}
+		/*if (value.find('\'') != string::npos || value.find('"') != string::npos) {
 			action->setData(colnames[i], new Data(value.c_str()));
 		}
 		else {
 			double fvalue = atof(value.c_str());
 			action->setData(colnames[i], new Data(fvalue));
-		}
+		}*/
 	}
 	return action;
 }
@@ -183,7 +225,7 @@ pAction Parser::insert(string& str) {
 /*
 	delete from tablename
 */
-pAction Parser::del(string& str) {
+pAction Parser::del(string& str,pEngine engine) {
 	DeleteAction* action = new DeleteAction();
 	action->setType("delete");
 	string from, table,del;

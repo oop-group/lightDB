@@ -7,15 +7,17 @@
 
 using namespace std;
 
+class Engine;
+
 /*
 	SQLÓï¾ä½âÎöÆ÷
 */
 class Parser {
 private:
-	static pAction select(string& str);
-	static pAction update(string& str);
-	static pAction del(string& str);
-	static pAction insert(string& str);
+	static pAction select(string& str,pEngine engine);
+	static pAction update(string& str,pEngine engine);
+	static pAction del(string& str,pEngine engine);
+	static pAction insert(string& str,pEngine engine);
 	map<string, pActionFunc> actionMap;	
 	static pCase equal(pData value);
 	static pCase notEqual(pData value);
@@ -24,9 +26,10 @@ private:
 	static pCase lesseq(pData value);
 	static pCase greatereq(pData value);
 	map<string, pCaseFunc> caseMap;
+	Engine* engine;
 
 public:
-	Parser();
+	Parser(Engine* e);
 	Action* parse(string& input);
 	
 };

@@ -137,3 +137,53 @@ pData Data::Deserialize(const string& content){
         return nullptr;
     }
 }
+
+
+bool Data::operator==(const Data& d) {
+	if (d.getType() != type) return false;
+	switch (type)
+	{
+	case ColumnType::INT:
+		return d.getIntV() == intV;
+	case ColumnType::DOUBLE:
+		return d.getDoubleV() == doubleV;
+	case ColumnType::CHAR:
+		return strcmp(d.getCharV(), charV) == 0;
+	default:
+		break;
+	}
+}
+
+bool Data::operator!=(const Data& d) {
+	return !(operator==(d));
+}
+
+bool Data::operator<(const Data& d) {
+	if (d.getType() != type) return false;
+	switch (type)
+	{
+	case ColumnType::INT:
+		return intV < d.getIntV();
+	case ColumnType::DOUBLE:
+		return doubleV < d.getDoubleV();
+	case ColumnType::CHAR:
+		return strcmp(charV, d.getCharV()) < 0;
+	default:
+		break;
+	}
+}
+
+
+
+bool Data::operator>(const Data& d) {
+	return !(operator<=(d));
+}
+
+bool Data::operator>=(const Data& d) {
+	return !(operator<(d));
+}
+
+
+bool Data::operator<=(const Data& d) {
+	return operator<(d) || operator==(d);
+}

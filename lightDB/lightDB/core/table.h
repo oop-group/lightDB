@@ -17,6 +17,7 @@ class Table: public Serializable{
 	vector<string> names;				//按照插入顺序保存列名称
 
 	int getColumnLength(string name);	//指定名称列的记录数
+	vector<int> parseConditions(map<string,pCase>& condition);	
 public:
 	Table() :rows(0) {}
 
@@ -28,10 +29,10 @@ public:
 	/*
 		增删查改
 	*/
-	vector<vector<pair<string,Data*>>> search(vector<string> colNames);
-	void del();
-	void update(map<string,Data*>& datas);
-	void insert(map<string, Data*>& datas);
+	vector<Record> search(vector<string> colNames,map<string,pCase>& condition);
+	void del(map<string,pCase>& condition);
+	void update(map<string,pData>& datas,map<string,pCase>& condition);
+	void insert(map<string, pData>& datas);
 	string Serialize();
 	static pTable Deserialize(const string& content);
 };

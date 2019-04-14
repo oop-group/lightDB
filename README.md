@@ -4,11 +4,16 @@
 # lightDB
 A very weak light DB for oop.<br/>
 
-现在把增删查改的函数写完了，输入sql语句可以返回结果了。<br/>
-啊哈哈哈哈哈哈哈哈终于把最难的弄好了 啊哈哈哈哈哈哈哈哈哈<br/>
 测试sql语句在test.txt中。<br/>
-但是数据库的切换什么的还要通过hard code实现<br/>
-等我两小时后比赛完再去扩展一下命令集<br/>
+# TODOLIST
+* 尚未通过sql语句实现的功能：exit,show,create
+* and和or的顺序（现在一律当成and，可能需要用二叉树？）
+* load_database
+* write_database
+* 一些尚未用typedef优雅化的指针
+* 注释
+* 。。。优化？
+
 
 ## 重要：Database中有一处错误
 erase的方法不对，有空就改。<br/>

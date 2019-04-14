@@ -2,7 +2,13 @@
 作为正在进行中的课程大作业，此项目的README不知所云，待学期结束之后补上正式的README。
 =======
 # lightDB
-A very weak light DB for oop.
+A very weak light DB for oop.<br/>
+
+现在把增删查改的函数写完了，输入sql语句可以返回结果了。<br/>
+啊哈哈哈哈哈哈哈哈终于把最难的弄好了 啊哈哈哈哈哈哈哈哈哈<br/>
+测试sql语句在test.txt中。<br/>
+但是数据库的切换什么的还要通过hard code实现<br/>
+等我两小时后比赛完再去扩展一下命令集<br/>
 
 ## 重要：Database中有一处错误
 erase的方法不对，有空就改。<br/>

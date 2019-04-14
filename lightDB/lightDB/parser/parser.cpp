@@ -63,11 +63,28 @@ pAction Parser::parse(string& input) {
 				op = it->first;
 				value = expr.substr(pos + op.size(), expr.size() - pos - op.size());
 				value = strip(value);
-				if (value.find('\'') != string::npos || value.find('"') != string::npos) {		//字符串
+				/*if (value.find('\'') != string::npos || value.find('"') != string::npos) {		//字符串
 					action->addCondition(col, caseMap[op](new Data(value.c_str())));
 				}
 				else {
 					action->addCondition(col, caseMap[op](new Data(atof(value.c_str()))));		//数值型
+				}*/
+				auto colObj = engine->getCurrentDb()->getTable(action->getTable())->getColumn(col);
+				switch (colObj->getType())
+				{
+				case ColumnType::CHAR:
+					value = value.substr(1, value.size() - 2);	//去掉引号
+					value = strip(value);
+					action->addCondition(col, caseMap[op](new Data(value.c_str())));
+					break;
+				case ColumnType::DOUBLE:
+					action->addCondition(col, caseMap[op](new Data(atof(value.c_str()))));
+					break;
+				case ColumnType::INT:
+					action->addCondition(col, caseMap[op](new Data(atoi(value.c_str()))));
+					break;
+				default:
+					break;
 				}
 			}
 			it++;
@@ -84,20 +101,27 @@ pAction Parser::select(string& str,pEngine engine) {
 	is >> cmd;	//select
 	string tmp;
 	vector<string> cs;	//列名
+	bool isAll = false;	//是否选择全部列
 	while (is >> tmp) {
 		if (tmp == "from") break;
 		if (tmp == "*") {
 			is >> tmp;	//from
+			isAll = true;
 			break;
 		}
 		vector<string> colnames = split(tmp, ",");
 		filterSpace(colnames);
 		for (int i = 0, len = colnames.size(); i < len; i++) cs.push_back(colnames[i]);
 	}
+	
+	string tableStr;
+	is >> tableStr;
+	action->setTable(tableStr);
+	if (isAll) {
+		auto table = engine->getCurrentDb()->getTable(tableStr);
+		cs = table->getColNames();
+	}
 	action->setColumns(cs);
-	string table;
-	is >> table;
-	action->setTable(table);
 	return action;
 }
 
@@ -137,6 +161,7 @@ pAction Parser::update(string& str,pEngine engine) {
 	{
 	case ColumnType::CHAR:
 		value = value.substr(1, value.size() - 2);	//去掉引号
+		value = strip(value);
 		action->setData(col, new Data(value.c_str()));
 		break;
 	case ColumnType::DOUBLE:
@@ -200,6 +225,7 @@ pAction Parser::insert(string& str,pEngine engine) {
 		{
 		case ColumnType::CHAR:
 			value = value.substr(1, value.size() - 2);	//去掉引号
+			value = strip(value);
 			action->setData(col, new Data(value.c_str()));
 			break;
 		case ColumnType::DOUBLE:

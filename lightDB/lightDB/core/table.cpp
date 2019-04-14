@@ -1,5 +1,6 @@
 #include<algorithm>
 #include "table.h"
+#include "../parser/case.h"
 
 int Table::getColumnLength(string name) {
 	return columnObjs[name]->length();
@@ -50,7 +51,6 @@ vector<Record> Table::search(vector<string> colNames,map<string,pCase>& conditio
 
 	vector<Record> rets;
 	vector<int> matchIdx=parseConditions(condition);				//符合条件的下标
-	for (int i = 0; i < rows; i++) matchIdx.push_back(i);
 	for (auto i : matchIdx) {
 		Record ret;
 		for (auto colName:colNames) {
@@ -67,7 +67,6 @@ vector<Record> Table::search(vector<string> colNames,map<string,pCase>& conditio
 */
 void Table::del(map<string,pCase>& condition) {
 	vector<int> matchIdx=parseConditions(condition);
-	for (int i = 0; i < rows; i++) matchIdx.push_back(i);
 	sort(matchIdx.begin(), matchIdx.end());
 	int cnt,tmp;
 	for (auto name : names) {
@@ -89,7 +88,6 @@ void Table::del(map<string,pCase>& condition) {
 */
 void Table::update(map<string,pData>& datas,map<string,pCase>& condition) {
 	vector<int> matchIdx=parseConditions(condition);
-	for (int i = 0; i < rows; i++) matchIdx.push_back(i);
 	for (auto i : matchIdx) {
 		auto iter = datas.begin();
 		while (iter != datas.end()) {
@@ -162,7 +160,21 @@ vector<int> Table::parseConditions(map<string, pCase>& condition) {
 	}
 	for (int i = 0; i < rows; i++) {
 		auto it = condition.begin();
+		bool match = true;		//该条记录是否满足所有条件
 		while (it != condition.end()) {
+			string colName = it->first;
+			pCase c = it->second;
+			auto col = getColumn(colName);
+			auto data = col->getData(i);
+			bool checked = c->check(data);
+			if (!checked) {
+				match = false;
+				break;
+			}
+			it++;
+		}
+		if (match) {
+			ret.push_back(i);
 		}
 	}
 	return ret;

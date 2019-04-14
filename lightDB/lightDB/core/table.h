@@ -25,6 +25,7 @@ public:
 	pColumn getColumn(const string& name);
 	int length() { return rows; }
 	int cols() { return columnObjs.size(); }
+	vector<string> getColNames() { return names; }
 
 	/*
 		ÔöÉ¾²é¸Ä

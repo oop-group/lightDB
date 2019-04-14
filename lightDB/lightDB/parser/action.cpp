@@ -8,3 +8,7 @@ void SelectAction::setColumns(vector<string>& cs) {
 void Action::addCondition(string colname, pCase c) {
 	conditions.insert(pair<string, pCase>(colname, c));
 }
+
+vector<string> SelectAction::getColumns() {
+	return columns;
+}

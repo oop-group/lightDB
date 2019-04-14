@@ -27,7 +27,7 @@ class SelectAction :public Action {
 	vector<string> columns;			//查询返回的列名
 public:
 	void setColumns(vector<string>& s);
-	vector<string> getColumns() { return columns; }
+	vector<string> getColumns();
 };
 
 class UpdateAction :public Action {

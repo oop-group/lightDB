@@ -74,13 +74,13 @@ ostream& operator<<(ostream& out, const Data& d) {
 	switch (d.getType())
 	{
 	case ColumnType::INT:
-		out << d.getIntV() << endl;
+		out << d.getIntV() ;
 		break;
 	case ColumnType::DOUBLE:
-		out << d.getDoubleV() << endl;
+		out << d.getDoubleV() ;
 		break;
 	case ColumnType::CHAR:
-		out << d.getCharV() << endl;
+		out << d.getCharV();
 		break;
 	default:
 		break;
@@ -178,6 +178,7 @@ bool Data::operator<(const Data& d) {
 bool Data::operator>(const Data& d) {
 	return !(operator<=(d));
 }
+
 
 bool Data::operator>=(const Data& d) {
 	return !(operator<(d));

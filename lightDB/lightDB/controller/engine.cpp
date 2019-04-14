@@ -59,7 +59,18 @@ vector<Record> Engine::search(pAction action,pDatabase currentDb) {
 	auto table = currentDb->getTable(tableStr);
 	auto colnames=saction->getColumns();
 	auto condition = saction->getCondition();
-	return table->search(colnames,condition);
+	vector<Record> ret= table->search(colnames,condition);
+	if (ret.size() == 0) cout << "no match" << endl;
+	for (int i = 0; i < ret.size(); i++) {
+		Record r = ret[i];
+		auto it = r.begin();
+		while (it != r.end()) {
+			cout << it->first << " " << *(it->second) << "\t";
+			it++;
+		}
+		cout << endl;
+	}
+	return ret;
 }
 
 vector<Record> Engine::update(pAction action,pDatabase db) {

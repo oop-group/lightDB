@@ -1,4 +1,13 @@
 insert into stu (id,name,grade) values( 2018030040,  "xuliangqin", 8888)
 insert into stu(id, name,grade) values( 2016030040, "linfangyun ", 2333)
 insert into stu(id,name, grade) values( 2017030040," shenmingyuan", 6666)
+delete from stu where id=2017030040
+update stu set id=2016030041 where name="linfangyun"
+select name from stu where grade=6666 and name="shenmingyuan"
+select * from stu where id=3
+select id,name from stu where grade=2333
+
+
+
+
 

@@ -9,17 +9,28 @@ using namespace std;
 */
 
 class Engine {
-	pDatabase currentDb;	//当前被选中数据库
-
+	pDatabase currentDb;					//当前被选中数据库
+	map<string, pDatabase> databaseObjs;	//所有数据库
+	vector<string> dbNames;					//按插入顺序排列数据库名
 	map<string, pExecuteFunc> actionMap;
-	static vector<Record> insert(pAction,pDatabase);
-	static vector<Record> del(pAction,pDatabase);
-	static vector<Record> search(pAction,pDatabase);
-	static vector<Record> update(pAction,pDatabase);
+	
 public:
 	Engine();
 	void run();				
-	vector<Record> execute(string& s);		
+	string execute(string& s);		
 	void setCurrentDb(pDatabase db) { currentDb = db; }
+	void addDatabase(string name, pDatabase db) { dbNames.push_back(name); databaseObjs[name] = db; }
 	pDatabase getCurrentDb() { return currentDb; }
+	friend string einsert(pEngine, pAction);
+	friend string edel(pEngine, pAction);
+	friend string esearch(pEngine, pAction);
+	friend string eupdate(pEngine, pAction);
+	friend string euse(pEngine, pAction);
 };
+
+string einsert(pEngine, pAction);
+string edel(pEngine, pAction);
+string esearch(pEngine, pAction);
+string eupdate(pEngine, pAction);
+string euse(pEngine, pAction);
+string edrop(pEngine, pAction);

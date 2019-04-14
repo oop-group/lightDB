@@ -39,6 +39,10 @@ int main() {
 	table.addColumn("name", new Column(ColumnType::CHAR, vector<ColumnConstraint>{}));
 	table.addColumn("grade", new Column(ColumnType::DOUBLE, vector<ColumnConstraint>{}));
 	d.createTable("stu", &table);
+	Database e;
+	e.createTable("stu", &table);
+	engine.addDatabase("d", &d);
+	engine.addDatabase("e", &e);
 	engine.setCurrentDb(&d);
 	engine.run();
 	system("pause");

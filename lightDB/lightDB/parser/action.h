@@ -47,3 +47,16 @@ public:
 	void setData(string& colName, pData d) { data.insert(pair<string, pData>(colName, d)); }
 	map<string, pData> getData() { return data; }
 };
+
+class UseAction :public Action {
+	string database;
+public:
+	string getDbName() { return database; }
+	void setDbName(string& str) { database = str; }
+};
+
+class DropAction :public Action {
+	string dbname;
+public:
+	void setDbName(string& str) { dbname = str; }
+};

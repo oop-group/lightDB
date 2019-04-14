@@ -19,6 +19,7 @@ Parser::Parser(Engine* e) {
 	actionMap.insert(pair<string, pActionFunc>("UPDATE", this->update));
 	actionMap.insert(pair<string, pActionFunc>("DELETE", this->del));
 	actionMap.insert(pair<string, pActionFunc>("INSERT", this->insert));
+	actionMap.insert(pair<string, pActionFunc>("USE", this->use));
 	/*
 		操作符-判断类一览表
 	*/
@@ -63,12 +64,6 @@ pAction Parser::parse(string& input) {
 				op = it->first;
 				value = expr.substr(pos + op.size(), expr.size() - pos - op.size());
 				value = strip(value);
-				/*if (value.find('\'') != string::npos || value.find('"') != string::npos) {		//字符串
-					action->addCondition(col, caseMap[op](new Data(value.c_str())));
-				}
-				else {
-					action->addCondition(col, caseMap[op](new Data(atof(value.c_str()))));		//数值型
-				}*/
 				auto colObj = engine->getCurrentDb()->getTable(action->getTable())->getColumn(col);
 				switch (colObj->getType())
 				{
@@ -173,16 +168,6 @@ pAction Parser::update(string& str,pEngine engine) {
 	default:
 		break;
 	}
-	/*if (value.find('\'')!=string::npos || value.find('"')!=string::npos) {
-		value = value.substr(1, value.size() - 2);
-		value = strip(value);
-		action->setData(col, new Data(value.c_str()));
-	}
-	else {
-		//先假设这是浮点数
-		double fvalue = atof(strip(value).c_str());
-		action->setData(col, new Data(fvalue));
-	}*/
 	return action;
 }
 
@@ -237,13 +222,6 @@ pAction Parser::insert(string& str,pEngine engine) {
 		default:
 			break;
 		}
-		/*if (value.find('\'') != string::npos || value.find('"') != string::npos) {
-			action->setData(colnames[i], new Data(value.c_str()));
-		}
-		else {
-			double fvalue = atof(value.c_str());
-			action->setData(colnames[i], new Data(fvalue));
-		}*/
 	}
 	return action;
 }
@@ -258,6 +236,19 @@ pAction Parser::del(string& str,pEngine engine) {
 	istringstream is(str);
 	is >> del>>from >> table;
 	action->setTable(table);
+	return action;
+}
+
+/*
+	切换活动数据库
+*/
+pAction Parser::use(string& str, pEngine engine) {
+	UseAction* action = new UseAction();
+	istringstream is(str);
+	string cmd, db;
+	is >> cmd>>db;
+	action->setType("use");
+	action->setDbName(db);
 	return action;
 }
 

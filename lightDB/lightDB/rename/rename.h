@@ -26,7 +26,7 @@ typedef Engine* pEngine;
 
 typedef Action*(*pActionFunc)(string& input,pEngine engine);
 typedef Case*(*pCaseFunc)(pData value);
-typedef vector<Record>(*pExecuteFunc)(pAction action,pDatabase db);
+typedef string(*pExecuteFunc)(pEngine,pAction action);
 
 
 

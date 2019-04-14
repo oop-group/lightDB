@@ -18,6 +18,7 @@ private:
 	static pAction update(string& str,pEngine engine);
 	static pAction del(string& str,pEngine engine);
 	static pAction insert(string& str,pEngine engine);
+	static pAction use(string& str, pEngine engine);
 	map<string, pActionFunc> actionMap;	
 	static pCase equal(pData value);
 	static pCase notEqual(pData value);

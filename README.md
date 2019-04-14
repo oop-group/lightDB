@@ -12,6 +12,8 @@ A very weak light DB for oop.<br/>
 * write_database
 * 一些尚未用typedef优雅化的指针
 * 注释
+* 不安全的函数：strcpy,sprintf
+* database里erase的写法多次删除可能会出问题。。。。吧？
 * 。。。优化？
 
 

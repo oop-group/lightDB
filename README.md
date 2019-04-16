@@ -14,7 +14,7 @@ A very weak light DB for oop.<br/>
 * 注释
 * 不安全的函数：strcpy,sprintf
 * database里erase的写法多次删除可能会出问题。。。。吧？
-* 。。。优化？(string的+改成+=)
+* 。。。优化？(string的+改成+=,stringstream用static防止重复初始化)
 
 
 ## 重要：Database中有一处错误

@@ -6,15 +6,15 @@ A very weak light DB for oop.<br/>
 
 测试sql语句在test.txt中。<br/>
 # TODOLIST
-* 尚未通过sql语句实现的功能：exit,show,create
-* and和or的顺序（现在一律当成and，可能需要用二叉树？）
+<del> 尚未通过sql语句实现的功能：exit,show,create</del>
+* and和or的顺序（弄个二维数组）
 * load_database
 * write_database
 * 一些尚未用typedef优雅化的指针
 * 注释
 * 不安全的函数：strcpy,sprintf
 * database里erase的写法多次删除可能会出问题。。。。吧？
-* 。。。优化？(string的+改成+=,stringstream用static防止重复初始化)
+* 。。。优化？(string的+改成+=,stringstream用static防止重复初始化,引用)
 
 
 ## 重要：Database中有一处错误

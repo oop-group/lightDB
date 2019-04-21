@@ -70,7 +70,7 @@ vector<string> multipleSplit(string& str, vector<string>& seperators) {
 */
 string upper(string& s) {
 	for (int i = 0, len = s.size(); i < len; i++) {
-		s[i] = (char)(s[i] - 'a' + 'A');
+		if (s[i]>='a'&&s[i]<='z') s[i] = (char)(s[i] - 'a' + 'A');
 	}
 	return s;
 }	

@@ -2,11 +2,14 @@
 
 #include <iostream>
 #include <string.h>
+#include <sstream>
+#include <map>
 #include "../rename/rename.h"
 #include "../os/serializable.h"
 #include "../os/s_char.h"
 #include "../os/s_double.h"
 #include "../os/s_int.h"
+#include "../parser/mystring.h"
 
 using namespace std;
 
@@ -28,7 +31,6 @@ enum class ColumnType {
 */
 enum class ColumnConstraint {
 	NOT_NULL,	//非空约束
-	YES_NULL,		//空约束
 	UNIQUE,		//唯一约束
 	INCREMENT,	//自增约束
 	PRIMARY,	//主键约束
@@ -70,5 +72,27 @@ public:
 	bool operator<=(const Data& d);
 
 };
+
+class MapClass {
+public:
+	static map<string, ColumnType> typeMap;
+	static map<string, ColumnConstraint> constraintMap;
+	static int cnt;
+	/*MapClass() {
+		if (cnt == 0) {
+			typeMap["INT"] = ColumnType::INT;
+			typeMap["DOUBLE"] = ColumnType::DOUBLE;
+			typeMap["CHAR"] = ColumnType::CHAR;
+			constraintMap["NOTNULL"] = ColumnConstraint::NOT_NULL;
+			constraintMap["UNIQUE"] = ColumnConstraint::UNIQUE;
+			constraintMap["INCREMENT"] = ColumnConstraint::INCREMENT;
+			constraintMap["PRIMARYKEY"] = ColumnConstraint::PRIMARY;
+		}
+	}*/
+};
+
+ColumnType str2type(string& str);
+vector<ColumnConstraint> str2constraints(string& str);
+
 
 

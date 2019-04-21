@@ -48,6 +48,26 @@ public:
 	map<string, pData> getData() { return data; }
 };
 
+struct CreateTbItem {
+	string colName;
+	ColumnType type;
+	vector<ColumnConstraint> constraints;
+	CreateTbItem(const string& n, const ColumnType& t, const vector<ColumnConstraint>& c) { colName = n; type = t; constraints = c; }
+};
+
+class CreateTbAction :public Action {
+	vector<CreateTbItem> items;
+	string keyname;
+public:
+	void addItem(const string& n, const ColumnType& t, const vector<ColumnConstraint>& c) {
+		items.push_back(CreateTbItem(n, t, c));
+	}
+	void setPrimaryKey(const string& name) { keyname = name; }
+	string getKeyName() { return keyname; }
+	vector<CreateTbItem> getItems() { return items; }
+	string getTbName() { return table; }
+};
+
 class UseAction :public Action {
 	string database;
 public:
@@ -55,8 +75,24 @@ public:
 	void setDbName(string& str) { database = str; }
 };
 
-class DropAction :public Action {
+class ShowAction :public Action {
+	vector<string> databaseNames;
+	map<string, pDatabase> databaseObjs;
+public:
+	vector<string>& getnames() { return databaseNames; }
+	pDatabase getdbObj(const string& name) { return databaseObjs[name]; }
+};
+
+class DropDbAction :public Action {
 	string dbname;
 public:
 	void setDbName(string& str) { dbname = str; }
+	string getDbName() { return dbname; }
+};
+
+class CreateDbAction :public Action {
+	string dbname;
+public:
+	void setDbName(string& str) { dbname = str; }
+	string getDbName() { return dbname; }
 };

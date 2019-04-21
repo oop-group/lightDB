@@ -18,7 +18,8 @@ protected:
 	vector<pData> values;
 public:
 	Column(const ColumnType& ts, const vector<ColumnConstraint>& cs);
-	Column(){}
+	Column() {}
+	void addConstraint(ColumnConstraint c) { constraints.push_back(c); }
 	/*
 		（可能没用的）私有成员访问接口
 	*/

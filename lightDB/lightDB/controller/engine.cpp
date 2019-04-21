@@ -3,14 +3,17 @@
 #include "../parser/parser.h"
 
 using namespace std;
-//typedef string(Engine::*pExecuteFunc)(pAction, pDatabase) ;
 
 Engine::Engine() {
-	actionMap.insert(pair<string, pExecuteFunc>("insert", einsert));
-	actionMap.insert(pair<string, pExecuteFunc>("delete", edel));
-	actionMap.insert(pair<string, pExecuteFunc>("search", esearch));
-	actionMap.insert(pair<string, pExecuteFunc>("update", eupdate));
-	actionMap.insert(pair<string, pExecuteFunc>("use", euse));
+	actionMap["insert"] = einsert;
+	actionMap["delete"] = edel;
+	actionMap["search"] = esearch;
+	actionMap["update"] = eupdate;
+	actionMap["use"] = euse;
+	actionMap["show"] = eshow;
+	actionMap["dropdb"] = edropDb;
+	actionMap["createdb"] = ecreateDb;
+	actionMap["createtb"] = ecreateTb;
 }
 
 /*
@@ -106,8 +109,51 @@ string eupdate(pEngine engine,pAction action) {
 	return "";
 }
 
+string ecreateTb(pEngine engine, pAction action) {
+	CreateTbAction* caction = static_cast<CreateTbAction*>(action);
+	if (engine->getCurrentDb() == nullptr) return "";
+	pTable table = new Table;
+	auto items = caction->getItems();
+	for (auto item : items) {
+		pColumn c = new Column(item.type, item.constraints);
+		table->addColumn(item.colName,c);
+	}
+	string keyname = caction->getKeyName();
+	auto c = table->getColumn(keyname);
+	c->addConstraint(ColumnConstraint::PRIMARY);
+	engine->getCurrentDb()->createTable(caction->getTbName(), table);
+	return "";
+}
+
 string euse(pEngine engine,pAction action) {
 	UseAction* uaction = static_cast<UseAction*>(action);
 	engine->setCurrentDb(engine->databaseObjs[uaction->getDbName()]);
+	return "";
+}
+
+string eshow(pEngine engine, pAction action) {
+	vector<string> names = engine->getNames();
+	string ret;
+	for (string name : names) {
+		ret += name+'\n';	//数据库名
+		pDatabase db = engine->getDbObj(name);
+		vector<string> tbnames = db->getNames();
+		for (string tbname : tbnames) {
+			ret += tbname+'\t';	//表名
+		}
+		ret += '\n';
+	}
+	return ret;
+}
+
+string edropDb(pEngine engine, pAction action) {
+	DropDbAction* daction = static_cast<DropDbAction*>(action);
+	engine->dropDatabase(daction->getDbName());
+	return "";
+}
+
+string ecreateDb(pEngine engine, pAction action) {
+	CreateDbAction* caction = static_cast<CreateDbAction*>(action);
+	engine->createDatabase(caction->getDbName());
 	return "";
 }

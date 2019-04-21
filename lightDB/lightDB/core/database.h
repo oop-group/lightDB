@@ -17,7 +17,7 @@ class Database: public Serializable{
     public:
     //一些私有接口
     int getSize() const {return names.size();}
-
+	vector<string> getNames() { return names; }
     void createTable(string tablename, pTable table);
     void dropTable(const string& name);
     pTable getTable(const string& name);

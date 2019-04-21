@@ -15,20 +15,25 @@ Parser::Parser(Engine* e) {
 	/*
 		指令-函数映射表
 	*/
-	actionMap.insert(pair<string, pActionFunc>("SELECT", this->select));
-	actionMap.insert(pair<string, pActionFunc>("UPDATE", this->update));
-	actionMap.insert(pair<string, pActionFunc>("DELETE", this->del));
-	actionMap.insert(pair<string, pActionFunc>("INSERT", this->insert));
-	actionMap.insert(pair<string, pActionFunc>("USE", this->use));
+	actionMap["SELECT"] = select;
+	actionMap["UPDATE"] = update;
+	actionMap["DELETE"] = del;
+	actionMap["INSERT"] = insert;
+	actionMap["CREATETABLE"] = createTb;
+
+	actionMap["USE"] = use;
+	actionMap["SHOW"] = show;
+	actionMap["DROP"] = dropDb;
+	actionMap["CREATEDATABASE"] = createDb;
 	/*
 		操作符-判断类一览表
 	*/
-	caseMap.insert(pair<string, pCaseFunc>("=", this->equal));
-	caseMap.insert(pair<string, pCaseFunc>("!=", this->notEqual));
-	caseMap.insert(pair<string, pCaseFunc>(">", this->greater));
-	caseMap.insert(pair<string, pCaseFunc>("<", this->less));
-	caseMap.insert(pair<string, pCaseFunc>("<=", this->lesseq));
-	caseMap.insert(pair<string, pCaseFunc>(">=", this->greatereq));
+	caseMap["="] = equal;
+	caseMap["!="] = notEqual;
+	caseMap[">"] = greater;
+	caseMap["<"] = less;
+	caseMap["<="] = lesseq;
+	caseMap[">="] = greatereq;
 }
 
 
@@ -40,6 +45,11 @@ pAction Parser::parse(string& input) {
 	istringstream is0(inputs[0]);
 	is0 >> actionType;
 	actionType = upper(actionType);
+	if (actionType == "CREATE") {
+		string tableOrDb;
+		is0 >> tableOrDb;
+		actionType += upper(tableOrDb);
+	}
 	pAction action = actionMap[actionType](inputs[0],engine);
 	/*
 		解析条件子句，将其信息加入到action对象中
@@ -239,6 +249,38 @@ pAction Parser::del(string& str,pEngine engine) {
 	return action;
 }
 
+pAction Parser::createTb(string& str, pEngine engine) {
+	CreateTbAction* action = new CreateTbAction();
+	action->setType("createtb");
+	string cmd;
+	int tmp = str.find("table");
+	if (tmp == string::npos) tmp = str.find("TABLE");
+	str = str.substr(tmp + 6, str.size() - tmp-6);
+	str = strip(str);
+	tmp = str.find("(");
+	string table = str.substr(0, tmp);
+	table = strip(table);
+	action->setTable(table);	//数据表名
+	string expr = str.substr(tmp + 1, str.size() - tmp - 3);
+	vector<string> cols = split(expr,",");	
+	string colname, type, constraint,constraintpart,col;
+	int len = cols.size();
+	for (int i = 0; i < len - 1; i++) {	//前n-1个子句:stu_id int not null
+		col = cols[i];
+		istringstream is(col);
+		is >> colname>>type;
+		constraint = "";
+		while (is >> constraintpart) constraint += constraintpart;
+		action->addItem(colname, str2type(type), str2constraints(constraint));
+	}
+	col=cols[len - 1];	//最后一个子句：primary key(stu_id)
+	int leftParentthis = col.find("(");
+	int rightParentthis = col.find(")");
+	colname = col.substr(leftParentthis + 1, rightParentthis - 1 - leftParentthis);
+	action->setPrimaryKey(colname);
+	return action;
+}
+
 /*
 	切换活动数据库
 */
@@ -248,6 +290,32 @@ pAction Parser::use(string& str, pEngine engine) {
 	string cmd, db;
 	is >> cmd>>db;
 	action->setType("use");
+	action->setDbName(db);
+	return action;
+}
+
+pAction Parser::show(string& str, pEngine engine) {
+	ShowAction* action = new ShowAction();
+	action->setType("show");
+	return action;
+}
+
+pAction Parser::dropDb(string& str, pEngine engine) {
+	DropDbAction* action = new DropDbAction();
+	action->setType("dropdb");
+	istringstream is(str);
+	string cmd, db;
+	is >> cmd >> cmd>>db;
+	action->setDbName(db);
+	return action;
+}
+
+pAction Parser::createDb(string& str, pEngine engine) {
+	CreateDbAction* action = new CreateDbAction();
+	action->setType("createdb");
+	istringstream is(str);
+	string cmd, db;
+	is >> cmd >> cmd >> db;
 	action->setDbName(db);
 	return action;
 }

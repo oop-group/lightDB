@@ -188,3 +188,38 @@ bool Data::operator>=(const Data& d) {
 bool Data::operator<=(const Data& d) {
 	return operator<(d) || operator==(d);
 }
+
+int MapClass::cnt = 0;
+map<string, ColumnType> MapClass::typeMap = {
+	{"INT",ColumnType::INT},
+	{"DOUBLE",ColumnType::DOUBLE},
+	{"CHAR",ColumnType::CHAR}
+};
+map<string, ColumnConstraint> MapClass::constraintMap = {
+	{"NOTNULL",ColumnConstraint::NOT_NULL},
+	{"UNIQUE",ColumnConstraint::UNIQUE},
+	{"INCREMENT",ColumnConstraint::INCREMENT},
+	{"PRIMARYKEY",ColumnConstraint::PRIMARY}
+};
+/*
+	字符串转类型
+	例如：输入"INT",输出columntype::int
+*/
+
+ColumnType str2type(string& str) {
+	return MapClass::typeMap[upper(str)];
+}
+
+vector<ColumnConstraint> str2constraints(string& str) {
+	istringstream is(str);
+	string cmd = "", tmp;
+	vector<ColumnConstraint> ret;
+	while (is >> tmp) {
+		cmd += upper(tmp);
+		if (MapClass::constraintMap.find(cmd) != MapClass::constraintMap.end()) {
+			ret.push_back(MapClass::constraintMap[cmd]);
+			cmd = "";
+		}
+	}
+	return ret;
+}

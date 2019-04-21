@@ -9,6 +9,11 @@ select * from stu
 use e
 use d
 use e
+show databases
+drop database e
+create database c
+use d
+CREATE TABLE oop_info(stu_id INT NOT NULL, stu_name CHAR, PRIMARY KEY(stu_id));
 
 
 

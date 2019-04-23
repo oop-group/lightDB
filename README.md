@@ -6,7 +6,7 @@ A very weak light DB for oop.<br/>
 
 测试sql语句在test.txt中。<br/>
 # TODOLIST
-<del> 尚未通过sql语句实现的功能：exit,show,create</del>
+<del> 尚未通过sql语句实现的功能：exit,show,create</del><br/>
 <del>and和or的顺序（弄个二维数组）</del>
 * 。。。优化？(string的+改成+=,stringstream用static防止重复初始化,引用，Action类的继承关系，移动构造)
 * 不安全的函数：strcpy,sprintf

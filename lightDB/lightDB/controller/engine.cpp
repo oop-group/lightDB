@@ -25,8 +25,11 @@ void Engine::run() {
 	while (1) {
 		getline(cin, input);
 		if (input != "") {
-			ret = execute(input);
-			cout << ret;
+			if (input != "exit" && input != "quit") {
+				ret = execute(input);
+				cout << ret;
+			}
+			else exit(0);
 		}
 	}
 }

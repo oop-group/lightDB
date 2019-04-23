@@ -40,7 +40,7 @@ pColumn Table::getColumn(const string & name){
 /*
 	查
 */
-vector<Record> Table::search(vector<string> colNames,map<string,pCase>& condition)
+vector<Record> Table::search(vector<string> colNames,vector<vector<Condition>> condition)
 {
 	if (colNames[0] == "*") colNames = names;	//选择全部列
 	for (auto iter = colNames.begin(); iter != colNames.end(); iter++) {
@@ -65,7 +65,7 @@ vector<Record> Table::search(vector<string> colNames,map<string,pCase>& conditio
 /*
 	删
 */
-void Table::del(map<string,pCase>& condition) {
+void Table::del(vector<vector<Condition>> condition) {
 	vector<int> matchIdx=parseConditions(condition);
 	sort(matchIdx.begin(), matchIdx.end());
 	int cnt,tmp;
@@ -86,7 +86,7 @@ void Table::del(map<string,pCase>& condition) {
 /*
 	改
 */
-void Table::update(map<string,pData>& datas,map<string,pCase>& condition) {
+void Table::update(map<string,pData>& datas,vector<vector<Condition>> condition) {
 	vector<int> matchIdx=parseConditions(condition);
 	for (auto i : matchIdx) {
 		auto iter = datas.begin();
@@ -152,29 +152,31 @@ pTable Table::Deserialize(const string& content){
 	返回符合条件的下标数组
 	condition[columnName]=pCase
 */
-vector<int> Table::parseConditions(map<string, pCase>& condition) {
+vector<int> Table::parseConditions(vector<vector<Condition>> condition) {
 	vector<int> ret;
 	if (condition.size() == 0) {
 		for (int i = 0; i < rows; i++) ret.push_back(i);
 		return ret;
 	}
 	for (int i = 0; i < rows; i++) {
-		auto it = condition.begin();
-		bool match = true;		//该条记录是否满足所有条件
-		while (it != condition.end()) {
-			string colName = it->first;
-			pCase c = it->second;
-			auto col = getColumn(colName);
-			auto data = col->getData(i);
-			bool checked = c->check(data);
-			if (!checked) {
-				match = false;
+		for (int j = 0, len1 = condition.size(); j < len1; j++) {	//对每个or语句
+			bool match = true;		//该条记录是否满足所有and子句
+			for (int k = 0, len2 = condition[j].size(); k < len2; k++) {	//对每个and子句
+				auto pair = condition[j][k];	//pair(colname,case)
+				string colName = pair.first;
+				pCase c = pair.second;
+				auto col = getColumn(colName);
+				auto data = col->getData(i);
+				bool checked = c->check(data);
+				if (!checked) {	//一个and子句不成立
+					match = false;
+					break;
+				}
+			}
+			if (match) {		//一个or子句成立
+				ret.push_back(i);
 				break;
 			}
-			it++;
-		}
-		if (match) {
-			ret.push_back(i);
 		}
 	}
 	return ret;

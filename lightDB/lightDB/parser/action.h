@@ -6,6 +6,8 @@
 
 using namespace std;
 
+
+
 /*
 	根据SQL语句解析结果返回的动作
 */
@@ -13,14 +15,17 @@ class Action {
 protected:
 	string type;			//"search","update",etc
 	string table;
-	map<string, pCase> conditions;
+	//map<string, pCase> conditions;
+	vector<vector<Condition>> conditions;	//每一行代表一个or语句，每个or语句包含多个and语句
 public:
 	void setType(string s) { type = s; }
 	string getType() { return type; }
 	void setTable(string t) { table = t; }
 	string getTable() { return table; }
-	void addCondition(string colname, pCase c);
-	map<string, pCase> getCondition() { return conditions; }
+	//void addCondition(string colname, pCase c);
+	void setCondition(vector<vector<Condition>> cs) { conditions = cs; }
+	//map<string, pCase> getCondition() { return conditions; }
+	vector<vector<Condition>> getCondition() { return conditions; }
 };
 
 class SelectAction :public Action {

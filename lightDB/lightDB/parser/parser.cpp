@@ -58,43 +58,58 @@ pAction Parser::parse(string& input) {
 		return action;
 	}
 	istringstream is1(inputs[1]);
-	vector<string> seperators{ "and", "or", "AND", "OR" };
-	vector<string> exprs = multipleSplit(inputs[1], seperators);
-	int len = exprs.size();
+	//vector<string> seperators{ "and", "or", "AND", "OR" };
+	vector<string> orseps{ "or","OR" };
+	vector<string> andseps{ "and","AND" };
+	//vector<string> exprs = multipleSplit(inputs[1], seperators);
+	vector<string> orexprs = multipleSplit(inputs[1], orseps);	//先按照or分割
+	int len = orexprs.size();
+	vector<vector<Condition>> conditions;
 	for (int i = 0; i < len; i++) {
-		string expr = exprs[i];
-		int pos;
-		string col, op, value;
-		auto it = caseMap.begin();
-		while (it != caseMap.end()) {
-			pos = expr.find(it->first);	//操作符在pos中的位置
-			if (pos != string::npos) {	//找到正确操作符
-				col =expr.substr(0, pos);
-				col = strip(col);
-				op = it->first;
-				value = expr.substr(pos + op.size(), expr.size() - pos - op.size());
-				value = strip(value);
-				auto colObj = engine->getCurrentDb()->getTable(action->getTable())->getColumn(col);
-				switch (colObj->getType())
-				{
-				case ColumnType::CHAR:
-					value = value.substr(1, value.size() - 2);	//去掉引号
+		string tmpexpr = orexprs[i];
+		vector<string> andexprs = multipleSplit(tmpexpr, andseps);	//再按照and分割
+		int len1 = andexprs.size();
+		vector<Condition> tmpconditions;
+		for (int j = 0; j < len1; j++) {
+			string expr = andexprs[j];	//独立的and子句
+			int pos;
+			string col, op, value;
+			auto it = caseMap.begin();
+			while (it != caseMap.end()) {
+				pos = expr.find(it->first);	//操作符在pos中的位置
+				if (pos != string::npos) {	//找到正确操作符
+					col = expr.substr(0, pos);
+					col = strip(col);
+					op = it->first;
+					value = expr.substr(pos + op.size(), expr.size() - pos - op.size());
 					value = strip(value);
-					action->addCondition(col, caseMap[op](new Data(value.c_str())));
-					break;
-				case ColumnType::DOUBLE:
-					action->addCondition(col, caseMap[op](new Data(atof(value.c_str()))));
-					break;
-				case ColumnType::INT:
-					action->addCondition(col, caseMap[op](new Data(atoi(value.c_str()))));
-					break;
-				default:
-					break;
+					auto colObj = engine->getCurrentDb()->getTable(action->getTable())->getColumn(col);
+					switch (colObj->getType())
+					{
+					case ColumnType::CHAR:
+						value = value.substr(1, value.size() - 2);	//去掉引号
+						value = strip(value);
+						//action->addCondition(col, caseMap[op](new Data(value.c_str())));
+						tmpconditions.push_back(make_pair(col, caseMap[op](new Data(value.c_str()))));
+						break;
+					case ColumnType::DOUBLE:
+						//action->addCondition(col, caseMap[op](new Data(atof(value.c_str()))));
+						tmpconditions.push_back(make_pair(col, caseMap[op](new Data(atof(value.c_str())))));
+						break;
+					case ColumnType::INT:
+						//action->addCondition(col, caseMap[op](new Data(atoi(value.c_str()))));
+						tmpconditions.push_back(make_pair(col, caseMap[op](new Data(atoi(value.c_str())))));
+						break;
+					default:
+						break;
+					}
 				}
+				it++;
 			}
-			it++;
 		}
+		conditions.push_back(tmpconditions);
 	}
+	action->setCondition(conditions);
 	return action;
 }
 

@@ -1,7 +1,7 @@
-insert into stu (id,name,grade) values( 2018030,  "xuliangqin", 8888)
+insert into stu (id,name,grade) values( 2018030,  "xuliangqin", 6666)
 insert into stu(id, name,grade) values( 2016030, "linfangyun ", 2333)
 insert into stu(id,name, grade) values( 2017030," shenmingyuan", 6666)
-select name,grade from stu where grade=6666 and name="shenmingyuan"
+select name,grade from stu where grade=6666 and name="shenmingyuan" or name="linfangyun"
 select * from stu where id=3
 select id,name from stu where grade=2333
 select id from stu

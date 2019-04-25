@@ -5,6 +5,12 @@
 A very weak light DB for oop.<br/>
 
 测试sql语句在test.txt中。<br/>
+
+# 测试方法
+在IDE设置重定向，输入文件为xxx.sql，输出文件为xxx_cp.out。<br/>
+在命令行输入fc xxx.out xxx_cp.out(for windows)或diff xxx.out xxx_cp.out(for linux)<br/>
+如果出现“找不到异同”，则通过测试<br/>
+
 # TODOLIST
 <del> 尚未通过sql语句实现的功能：exit,show,create</del><br/>
 <del>and和or的顺序（弄个二维数组）</del>

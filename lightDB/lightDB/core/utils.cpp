@@ -201,6 +201,11 @@ map<string, ColumnConstraint> MapClass::constraintMap = {
 	{"INCREMENT",ColumnConstraint::INCREMENT},
 	{"PRIMARYKEY",ColumnConstraint::PRIMARY}
 };
+map<ColumnType, string> MapClass::strMap = {
+	{ColumnType::INT,"int(11)"},
+	{ColumnType::DOUBLE,"double(5,2)"},
+	{ColumnType::CHAR,"char(1)"}
+};
 /*
 	字符串转类型
 	例如：输入"INT",输出columntype::int
@@ -208,6 +213,10 @@ map<string, ColumnConstraint> MapClass::constraintMap = {
 
 ColumnType str2type(string& str) {
 	return MapClass::typeMap[upper(str)];
+}
+
+string type2str(ColumnType&& col) {
+	return MapClass::strMap[col];
 }
 
 vector<ColumnConstraint> str2constraints(string& str) {

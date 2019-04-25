@@ -33,8 +33,8 @@ int main() {
 	t.insert(data1);*/
 	//pData data = new Data(3);
 	Engine engine;
-	Database d;
-	Table table;
+	//Database d;
+	/*Table table;
 	table.addColumn("id", new Column(ColumnType::INT, vector<ColumnConstraint>{}));
 	table.addColumn("name", new Column(ColumnType::CHAR, vector<ColumnConstraint>{}));
 	table.addColumn("grade", new Column(ColumnType::DOUBLE, vector<ColumnConstraint>{}));
@@ -43,8 +43,8 @@ int main() {
 	e.createTable("stu", &table);
 	engine.addDatabase("d", &d);
 	engine.addDatabase("e", &e);
-	engine.setCurrentDb(&d);
+	engine.setCurrentDb(&d);*/
 	engine.run();
-	system("pause");
+	//system("pause");
 	return 0;
 }

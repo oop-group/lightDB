@@ -77,21 +77,12 @@ class MapClass {
 public:
 	static map<string, ColumnType> typeMap;
 	static map<string, ColumnConstraint> constraintMap;
+	static map<ColumnType, string> strMap;
 	static int cnt;
-	/*MapClass() {
-		if (cnt == 0) {
-			typeMap["INT"] = ColumnType::INT;
-			typeMap["DOUBLE"] = ColumnType::DOUBLE;
-			typeMap["CHAR"] = ColumnType::CHAR;
-			constraintMap["NOTNULL"] = ColumnConstraint::NOT_NULL;
-			constraintMap["UNIQUE"] = ColumnConstraint::UNIQUE;
-			constraintMap["INCREMENT"] = ColumnConstraint::INCREMENT;
-			constraintMap["PRIMARYKEY"] = ColumnConstraint::PRIMARY;
-		}
-	}*/
 };
 
 ColumnType str2type(string& str);
+string type2str(ColumnType&& type);
 vector<ColumnConstraint> str2constraints(string& str);
 
 

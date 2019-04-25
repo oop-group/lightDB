@@ -95,6 +95,9 @@ public:
 	string getDbName() { return dbname; }
 };
 
+class ShowColAction :public Action {
+};
+
 class CreateDbAction :public Action {
 	string dbname;
 public:

@@ -22,7 +22,8 @@ Parser::Parser(Engine* e) {
 	actionMap["CREATETABLE"] = createTb;
 
 	actionMap["USE"] = use;
-	actionMap["SHOW"] = show;
+	actionMap["SHOWDATABASES"] = show;
+	actionMap["SHOWCOLUMNS"] = showCol;
 	actionMap["DROP"] = dropDb;
 	actionMap["CREATEDATABASE"] = createDb;
 	/*
@@ -39,6 +40,8 @@ Parser::Parser(Engine* e) {
 
 
 pAction Parser::parse(string& input) {
+	//去掉末尾分号
+	input = input.substr(0, input.size() - 1);
 	vector<string> inputs = split(input, "where");
 	if (inputs.size() != 2) inputs = split(input, "WHERE");
 	string actionType;
@@ -46,6 +49,11 @@ pAction Parser::parse(string& input) {
 	is0 >> actionType;
 	actionType = upper(actionType);
 	if (actionType == "CREATE") {
+		string tableOrDb;
+		is0 >> tableOrDb;
+		actionType += upper(tableOrDb);
+	}
+	else if (actionType == "SHOW") {
 		string tableOrDb;
 		is0 >> tableOrDb;
 		actionType += upper(tableOrDb);
@@ -58,10 +66,8 @@ pAction Parser::parse(string& input) {
 		return action;
 	}
 	istringstream is1(inputs[1]);
-	//vector<string> seperators{ "and", "or", "AND", "OR" };
 	vector<string> orseps{ "or","OR" };
 	vector<string> andseps{ "and","AND" };
-	//vector<string> exprs = multipleSplit(inputs[1], seperators);
 	vector<string> orexprs = multipleSplit(inputs[1], orseps);	//先按照or分割
 	int len = orexprs.size();
 	vector<vector<Condition>> conditions;
@@ -89,15 +95,12 @@ pAction Parser::parse(string& input) {
 					case ColumnType::CHAR:
 						value = value.substr(1, value.size() - 2);	//去掉引号
 						value = strip(value);
-						//action->addCondition(col, caseMap[op](new Data(value.c_str())));
 						tmpconditions.push_back(make_pair(col, caseMap[op](new Data(value.c_str()))));
 						break;
 					case ColumnType::DOUBLE:
-						//action->addCondition(col, caseMap[op](new Data(atof(value.c_str()))));
 						tmpconditions.push_back(make_pair(col, caseMap[op](new Data(atof(value.c_str())))));
 						break;
 					case ColumnType::INT:
-						//action->addCondition(col, caseMap[op](new Data(atoi(value.c_str()))));
 						tmpconditions.push_back(make_pair(col, caseMap[op](new Data(atoi(value.c_str())))));
 						break;
 					default:
@@ -142,6 +145,16 @@ pAction Parser::select(string& str,pEngine engine) {
 		cs = table->getColNames();
 	}
 	action->setColumns(cs);
+	return action;
+}
+
+pAction Parser::showCol(string& str, pEngine engine) {
+	ShowColAction* action = new ShowColAction();
+	action->setType("showcol");
+	string cmd,from,table;
+	istringstream is(str);
+	is >> cmd >> cmd >> from>>table;		//show columns from
+	action->setTable(table);
 	return action;
 }
 

@@ -1,6 +1,7 @@
 #include <iostream>
 #include "engine.h"
 #include "../parser/parser.h"
+#include "../core/utils.h"
 
 using namespace std;
 
@@ -11,6 +12,7 @@ Engine::Engine() {
 	actionMap["update"] = eupdate;
 	actionMap["use"] = euse;
 	actionMap["show"] = eshow;
+	actionMap["showcol"] = eshowcol;
 	actionMap["dropdb"] = edropDb;
 	actionMap["createdb"] = ecreateDb;
 	actionMap["createtb"] = ecreateTb;
@@ -22,8 +24,7 @@ Engine::Engine() {
 void Engine::run() {
 	string input;
 	string ret;
-	while (1) {
-		getline(cin, input);
+	while (getline(cin,input)) {
 		if (input != "") {
 			if (input != "exit" && input != "quit") {
 				ret = execute(input);
@@ -31,6 +32,7 @@ void Engine::run() {
 			}
 			else exit(0);
 		}
+		else break;
 	}
 }
 
@@ -70,14 +72,22 @@ string esearch(pEngine engine,pAction action) {
 	auto colnames=saction->getColumns();
 	auto condition = saction->getCondition();
 	vector<Record> ret= table->search(colnames,condition);
-	if (ret.size() == 0) cout << "no match" << endl;
+	if (ret.size() == 0) return "";
 	string retStr;
 	char tmpint[10], tmpfloat[100];
-	for (int i = 0, len = ret.size(); i < len; i++) {	//一条记录
+	int i = 0,len=colnames.size();
+	for (; i < len; i++) {
+		retStr += colnames[i];
+		retStr += '\t';
+	}
+	retStr[retStr.size() - 1] = '\n';
+	i = 0;
+	len = ret.size();
+	for (; i < len; i++) {	//一条记录
 		auto it = ret[i].begin();
 		while (it != ret[i].end()) {	//一个字段
-			retStr += it->first;
-			retStr.push_back('\t');
+			//retStr += it->first;
+			//retStr.push_back('\t');
 			switch (table->getColumn(it->first)->getType())
 			{
 			case ColumnType::INT:
@@ -97,7 +107,7 @@ string esearch(pEngine engine,pAction action) {
 			retStr.push_back('\t');	
 			it++;
 		}
-		retStr.push_back('\n');
+		retStr[retStr.size() - 1] = '\n';
 	}
 	return retStr;
 }
@@ -134,17 +144,50 @@ string euse(pEngine engine,pAction action) {
 	return "";
 }
 
+//show columns
+string eshowcol(pEngine engine, pAction action) {
+	string tbname = action->getTable();
+	auto table = engine->getCurrentDb()->getTable(tbname);
+	string ret = "Field\tType\tNull\tKey\tDefault\tExtra\n";
+	auto names= table->getColNames();
+	for (int i = 0, len = names.size(); i < len; i++) {
+		string name = names[i];
+		auto col = table->getColumn(name);
+		ret += name + '\t';
+		ret += type2str(col->getType())+"\t";
+		auto css = col->getConstraints();
+		auto it = find(css.begin(), css.end(), ColumnConstraint::NOT_NULL);
+		ret += (it != css.end()) ? "NO" : "YES";
+		ret+='\t';
+		it = find(css.begin(), css.end(), ColumnConstraint::PRIMARY);
+		ret += (it != css.end()) ? "PRI" : "";
+		ret+='\t';
+		/*
+			default和extra暂时用不到，所以没有写
+		*/
+		ret+="NULL";	//default
+		ret += "\t\n";	//extra
+		
+	}
+	return ret;
+}
+
+//show databases
 string eshow(pEngine engine, pAction action) {
 	vector<string> names = engine->getNames();
 	string ret;
-	for (string name : names) {
-		ret += name+'\n';	//数据库名
+	ret += "Database\n";
+	for (int i = names.size() - 1; i >= 0; i--) {
+		string name = names[i];
+		ret += name + '\n';	//数据库名
 		pDatabase db = engine->getDbObj(name);
 		vector<string> tbnames = db->getNames();
-		for (string tbname : tbnames) {
-			ret += tbname+'\t';	//表名
+		if (tbnames.size()) {
+			ret += "Table";
+			for (string tbname : tbnames) {
+				ret += tbname + '\n';	//表名
+			}
 		}
-		ret += '\n';
 	}
 	return ret;
 }

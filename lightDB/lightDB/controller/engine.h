@@ -46,6 +46,7 @@ public:
 
 	friend string euse(pEngine, pAction);
 	friend string eshow(pEngine, pAction);
+	friend string eshowcol(pEngine, pAction);
 	friend string edropDb(pEngine, pAction);
 	friend string ecreateDb(pEngine, pAction);
 };
@@ -59,4 +60,5 @@ string ecreateTb(pEngine, pAction);
 string euse(pEngine, pAction);
 string edropDb(pEngine, pAction);
 string eshow(pEngine, pAction);
+string eshowcol(pEngine, pAction);
 string ecreateDb(pEngine, pAction);

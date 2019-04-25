@@ -1,14 +1,18 @@
-﻿  table.cpp
+﻿  engine.cpp
 d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\core\column.h(26): warning C4267: “return”: 从“size_t”转换到“int”，可能丢失数据
 d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\core\table.h(27): warning C4267: “return”: 从“size_t”转换到“int”，可能丢失数据
-d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\core\table.cpp(122): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
-d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\core\table.cpp(126): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
-d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\core\table.cpp(128): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
-d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\core\table.cpp(162): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
-d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\core\table.cpp(164): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\core\database.h(19): warning C4267: “return”: 从“size_t”转换到“int”，可能丢失数据
+d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\controller\engine.cpp(78): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\controller\engine.cpp(85): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
+d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\controller\engine.cpp(94): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\stdio.h(1774): note: 参见“sprintf”的声明
+d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\controller\engine.cpp(98): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\stdio.h(1774): note: 参见“sprintf”的声明
+d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\controller\engine.cpp(153): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\controller\engine.cpp(180): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
   正在生成代码
-  4 of 2242 functions ( 0.2%) were compiled, the rest were copied from previous compilation.
+  0 of 2391 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    3 functions had inline decision re-evaluated but remain unchanged
+    0 functions had inline decision re-evaluated but remain unchanged
   已完成代码的生成
   lightDB.vcxproj -> D:\courses\this_semester\oop\homework\big_work\lightDB\lightDB\x64\Release\lightDB.exe

@@ -7,10 +7,11 @@ A very weak light DB for oop.<br/>
 # 优化
 * 引用
 * 移动构造
+* 析构
+* 异常处理
 * stringstream用static防止重复初始化
 * string的+改成+=
 * 不安全的函数：strcpy,sprintf
-* database里erase的写法多次删除可能会出问题。。。。吧？
 * 注释
 * 一些尚未用typedef优雅化的指针
 

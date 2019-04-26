@@ -14,43 +14,54 @@ using namespace std;
 class Action {
 protected:
 	string type;			//"search","update",etc
-	string table;
-	//map<string, pCase> conditions;
-	vector<vector<Condition>> conditions;	//每一行代表一个or语句，每个or语句包含多个and语句
 public:
 	void setType(string s) { type = s; }
 	string getType() { return type; }
+};
+
+/*
+	表操作
+*/
+class TableOpAction:public Action {
+	string table;
+	vector<vector<Condition>> conditions;
+public:
 	void setTable(string t) { table = t; }
 	string getTable() { return table; }
-	//void addCondition(string colname, pCase c);
 	void setCondition(vector<vector<Condition>> cs) { conditions = cs; }
-	//map<string, pCase> getCondition() { return conditions; }
 	vector<vector<Condition>> getCondition() { return conditions; }
 };
 
-class SelectAction :public Action {
+class SelectAction :public TableOpAction{
 	vector<string> columns;			//查询返回的列名
 public:
 	void setColumns(vector<string>& s);
 	vector<string> getColumns();
 };
 
-class UpdateAction :public Action {
+class UpdateAction :public TableOpAction{
 	map<string, pData> data;
 public:
 	void setData(string& colName, pData d) { data.insert(pair<string, pData>(colName, d)); }
 	map<string, pData> getData() { return data; }
 };
 
-class DeleteAction :public Action {
+class DeleteAction :public TableOpAction{
 
 };
 
-class InsertAction :public Action {
+class InsertAction :public TableOpAction{
 	map<string, pData> data;
 public:
 	void setData(string& colName, pData d) { data.insert(pair<string, pData>(colName, d)); }
 	map<string, pData> getData() { return data; }
+};
+
+class DatabaseOpAction :public Action {
+	string database;
+public:
+	string getDbName() { return database; }
+	void setDbName(string& str) { database = str; }
 };
 
 struct CreateTbItem {
@@ -60,24 +71,23 @@ struct CreateTbItem {
 	CreateTbItem(const string& n, const ColumnType& t, const vector<ColumnConstraint>& c) { colName = n; type = t; constraints = c; }
 };
 
+
 class CreateTbAction :public Action {
 	vector<CreateTbItem> items;
-	string keyname;
+	string keyname,table;
 public:
 	void addItem(const string& n, const ColumnType& t, const vector<ColumnConstraint>& c) {
 		items.push_back(CreateTbItem(n, t, c));
 	}
+	void setTable(string t) { table = t; }
+	string getTable() { return table; }
 	void setPrimaryKey(const string& name) { keyname = name; }
 	string getKeyName() { return keyname; }
 	vector<CreateTbItem> getItems() { return items; }
-	string getTbName() { return table; }
 };
 
-class UseAction :public Action {
-	string database;
-public:
-	string getDbName() { return database; }
-	void setDbName(string& str) { database = str; }
+class UseAction :public DatabaseOpAction {
+	
 };
 
 class ShowAction :public Action {
@@ -88,19 +98,11 @@ public:
 	pDatabase getdbObj(const string& name) { return databaseObjs[name]; }
 };
 
-class DropDbAction :public Action {
-	string dbname;
-public:
-	void setDbName(string& str) { dbname = str; }
-	string getDbName() { return dbname; }
+class DropDbAction :public DatabaseOpAction{
 };
 
-class ShowColAction :public Action {
+class ShowColAction :public TableOpAction {
 };
 
-class CreateDbAction :public Action {
-	string dbname;
-public:
-	void setDbName(string& str) { dbname = str; }
-	string getDbName() { return dbname; }
+class CreateDbAction :public DatabaseOpAction{
 };

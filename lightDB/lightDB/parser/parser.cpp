@@ -89,7 +89,7 @@ pAction Parser::parse(string& input) {
 					op = it->first;
 					value = expr.substr(pos + op.size(), expr.size() - pos - op.size());
 					value = strip(value);
-					auto colObj = engine->getCurrentDb()->getTable(action->getTable())->getColumn(col);
+					auto colObj = engine->getCurrentDb()->getTable(static_cast<TableOpAction*>(action)->getTable())->getColumn(col);
 					switch (colObj->getType())
 					{
 					case ColumnType::CHAR:
@@ -112,7 +112,7 @@ pAction Parser::parse(string& input) {
 		}
 		conditions.push_back(tmpconditions);
 	}
-	action->setCondition(conditions);
+	static_cast<TableOpAction*>(action)->setCondition(conditions);
 	return action;
 }
 

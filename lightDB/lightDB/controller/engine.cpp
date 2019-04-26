@@ -1,4 +1,5 @@
 #include <iostream>
+#include <algorithm>
 #include "engine.h"
 #include "../parser/parser.h"
 #include "../core/utils.h"
@@ -134,7 +135,7 @@ string ecreateTb(pEngine engine, pAction action) {
 	string keyname = caction->getKeyName();
 	auto c = table->getColumn(keyname);
 	c->addConstraint(ColumnConstraint::PRIMARY);
-	engine->getCurrentDb()->createTable(caction->getTbName(), table);
+	engine->getCurrentDb()->createTable(caction->getTable(), table);
 	return "";
 }
 
@@ -146,7 +147,7 @@ string euse(pEngine engine,pAction action) {
 
 //show columns
 string eshowcol(pEngine engine, pAction action) {
-	string tbname = action->getTable();
+	string tbname = static_cast<ShowColAction*>(action)->getTable();
 	auto table = engine->getCurrentDb()->getTable(tbname);
 	string ret = "Field\tType\tNull\tKey\tDefault\tExtra\n";
 	auto names= table->getColNames();

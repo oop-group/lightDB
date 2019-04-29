@@ -14,6 +14,7 @@ A very weak light DB for oop.<br/>
 * 不安全的函数：strcpy,sprintf
 * 注释
 * 一些尚未用typedef优雅化的指针
+* 字典序输出表名
 
 
 ## 重要：Database中有一处错误

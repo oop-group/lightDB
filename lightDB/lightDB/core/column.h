@@ -17,9 +17,9 @@ protected:
 	vector<ColumnConstraint> constraints;	//约束类型
 	vector<pData> values;
 public:
-	Column(const ColumnType& ts, const vector<ColumnConstraint>& cs);
+	Column(ColumnType&& ts, vector<ColumnConstraint>&& cs);
 	Column() {}
-	void addConstraint(ColumnConstraint c) { constraints.push_back(c); }
+	void addConstraint(ColumnConstraint&& c) { constraints.push_back(c); }
 	/*
 		（可能没用的）私有成员访问接口
 	*/
@@ -38,7 +38,6 @@ public:
 	*/
 	void del(int index) {
 		values.erase(values.begin() + index);
-		//rows--;
 	}
 	/*
 		查

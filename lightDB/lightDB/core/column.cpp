@@ -1,8 +1,8 @@
 #include "column.h"
 
-Column::Column(const ColumnType& t, const vector<ColumnConstraint>& cs)
+Column::Column(ColumnType&& t, vector<ColumnConstraint>&& cs)
 {
-	for (int j = 0, len = cs.size(); j < len; j++) constraints.push_back(cs[j]);
+	constraints = cs;
 	type = t;
 }
 /*
@@ -40,7 +40,7 @@ pColumn Column::Deserialize(const string& content){
     for(int i=0;i<5;i++){
         if(b[i])v.push_back(ColumnConstraint(i));
     }
-    pColumn column=new Column(t,v);
+    pColumn column=new Column(std::move(t),std::move(v));
     int valueNum=*s_int::Deserialize(content.substr(1,4));
     int point=5;
     for(int i=0;i<valueNum;i++){

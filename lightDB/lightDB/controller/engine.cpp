@@ -62,7 +62,7 @@ string edel(pEngine engine,pAction action) {
 	string tableStr = daction->getTable();
 	auto condition = daction->getCondition();
 	auto table = engine->getCurrentDb()->getTable(tableStr);
-	table->del(condition);
+	table->del(std::move(condition));
 	return "";
 }
 
@@ -72,7 +72,7 @@ string esearch(pEngine engine,pAction action) {
 	auto table = engine->getCurrentDb()->getTable(tableStr);
 	auto colnames=saction->getColumns();
 	auto condition = saction->getCondition();
-	vector<Record> ret= table->search(colnames,condition);
+	vector<Record> ret= table->search(colnames,std::move(condition));
 	if (ret.size() == 0) return "";
 	string retStr;
 	char tmpint[10], tmpfloat[100];
@@ -87,16 +87,14 @@ string esearch(pEngine engine,pAction action) {
 	for (; i < len; i++) {	//一条记录
 		auto it = ret[i].begin();
 		while (it != ret[i].end()) {	//一个字段
-			//retStr += it->first;
-			//retStr.push_back('\t');
 			switch (table->getColumn(it->first)->getType())
 			{
 			case ColumnType::INT:
-				sprintf(tmpint, "%d", it->second->getIntV());
+				snprintf(tmpint, 11,"%d", it->second->getIntV());
 				retStr += tmpint;
 				break;
 			case ColumnType::DOUBLE:
-				sprintf(tmpfloat, "%f", it->second->getDoubleV());
+				snprintf(tmpfloat, 101,"%f", it->second->getDoubleV());
 				retStr += tmpfloat;
 				break;
 			case ColumnType::CHAR:
@@ -119,7 +117,7 @@ string eupdate(pEngine engine,pAction action) {
 	auto table = engine->getCurrentDb()->getTable(tableStr);
 	auto data = uaction->getData();
 	auto condition = uaction->getCondition();
-	table->update(data,condition);
+	table->update(data,std::move(condition));
 	return "";
 }
 
@@ -129,8 +127,8 @@ string ecreateTb(pEngine engine, pAction action) {
 	pTable table = new Table;
 	auto items = caction->getItems();
 	for (auto item : items) {
-		pColumn c = new Column(item.type, item.constraints);
-		table->addColumn(item.colName,c);
+		pColumn c = new Column(item.getType(), item.getConstraints());
+		table->addColumn(item.getColName(),c);
 	}
 	string keyname = caction->getKeyName();
 	auto c = table->getColumn(keyname);
@@ -178,7 +176,9 @@ string eshow(pEngine engine, pAction action) {
 	vector<string> names = engine->getNames();
 	string ret;
 	ret += "Database\n";
-	for (int i = names.size() - 1; i >= 0; i--) {
+	//按照字典序输出表名
+	sort(names.begin(), names.end());
+	for (int i=0,len=names.size();i<len;i++){
 		string name = names[i];
 		ret += name + '\n';	//数据库名
 		pDatabase db = engine->getDbObj(name);

@@ -6,6 +6,6 @@ string s_char::Serialize(){
 }
 s_char* s_char::Deserialize(const string& content){
     char* c=new char[content.size()];
-    strcpy(c,content.c_str());
+    strcpy_s(c,content.size(),content.c_str());
     return new s_char(c);
 }

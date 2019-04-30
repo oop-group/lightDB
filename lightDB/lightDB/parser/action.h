@@ -28,15 +28,15 @@ class TableOpAction:public Action {
 public:
 	void setTable(string t) { table = t; }
 	string getTable() { return table; }
-	void setCondition(vector<vector<Condition>> cs) { conditions = cs; }
+	void setCondition(vector<vector<Condition>>&& cs) { conditions = cs; }
 	vector<vector<Condition>> getCondition() { return conditions; }
 };
 
 class SelectAction :public TableOpAction{
 	vector<string> columns;			//查询返回的列名
 public:
-	void setColumns(vector<string>& s);
-	vector<string> getColumns();
+	void setColumns(vector<string>&& s) { columns = s; }
+	vector<string> getColumns() { return columns; }
 };
 
 class UpdateAction :public TableOpAction{
@@ -64,11 +64,20 @@ public:
 	void setDbName(string& str) { database = str; }
 };
 
-struct CreateTbItem {
+class CreateTbItem {
 	string colName;
 	ColumnType type;
 	vector<ColumnConstraint> constraints;
-	CreateTbItem(const string& n, const ColumnType& t, const vector<ColumnConstraint>& c) { colName = n; type = t; constraints = c; }
+public:
+	CreateTbItem(const string& n, ColumnType&& t, vector<ColumnConstraint>&& c) { 
+		colName = n; type = t; constraints = c; }
+	CreateTbItem(){}
+	void setColName(const string& name) { colName = name; }
+	string getColName() { return colName; }
+	void setType(ColumnType&& t) { type = t; }
+	ColumnType getType() { return type; }
+	void setConstraints(vector<ColumnConstraint>&& c) { constraints = c; }
+	vector<ColumnConstraint> getConstraints() { return constraints; }
 };
 
 
@@ -76,8 +85,12 @@ class CreateTbAction :public Action {
 	vector<CreateTbItem> items;
 	string keyname,table;
 public:
-	void addItem(const string& n, const ColumnType& t, const vector<ColumnConstraint>& c) {
-		items.push_back(CreateTbItem(n, t, c));
+	void addItem(const string& n, ColumnType&& t, vector<ColumnConstraint>&& c) {
+		auto item = CreateTbItem();
+		item.setColName(n);
+		item.setType(std::move(t));
+		item.setConstraints(std::move(c));
+		items.push_back(item);
 	}
 	void setTable(string t) { table = t; }
 	string getTable() { return table; }
@@ -94,7 +107,7 @@ class ShowAction :public Action {
 	vector<string> databaseNames;
 	map<string, pDatabase> databaseObjs;
 public:
-	vector<string>& getnames() { return databaseNames; }
+	vector<string> getnames() { return databaseNames; }
 	pDatabase getdbObj(const string& name) { return databaseObjs[name]; }
 };
 

@@ -40,7 +40,7 @@ pColumn Table::getColumn(const string & name){
 /*
 	查
 */
-vector<Record> Table::search(vector<string> colNames,vector<vector<Condition>> condition)
+vector<Record> Table::search(vector<string> colNames,vector<vector<Condition>>&& condition)
 {
 	if (colNames[0] == "*") colNames = names;	//选择全部列
 	for (auto iter = colNames.begin(); iter != colNames.end(); iter++) {
@@ -50,7 +50,7 @@ vector<Record> Table::search(vector<string> colNames,vector<vector<Condition>> c
 	}	//除掉不在表中的字段名
 
 	vector<Record> rets;
-	vector<int> matchIdx=parseConditions(condition);				//符合条件的下标
+	vector<int> matchIdx=parseConditions(std::move(condition));				//符合条件的下标
 	for (auto i : matchIdx) {
 		Record ret;
 		for (auto colName:colNames) {
@@ -65,8 +65,8 @@ vector<Record> Table::search(vector<string> colNames,vector<vector<Condition>> c
 /*
 	删
 */
-void Table::del(vector<vector<Condition>> condition) {
-	vector<int> matchIdx=parseConditions(condition);
+void Table::del(vector<vector<Condition>>&& condition) {
+	vector<int> matchIdx=parseConditions(std::move(condition));
 	sort(matchIdx.begin(), matchIdx.end());
 	int cnt,tmp;
 	for (auto name : names) {
@@ -86,8 +86,8 @@ void Table::del(vector<vector<Condition>> condition) {
 /*
 	改
 */
-void Table::update(map<string,pData>& datas,vector<vector<Condition>> condition) {
-	vector<int> matchIdx=parseConditions(condition);
+void Table::update(map<string,pData>& datas,vector<vector<Condition>>&& condition) {
+	vector<int> matchIdx=parseConditions(std::move(condition));
 	for (auto i : matchIdx) {
 		auto iter = datas.begin();
 		while (iter != datas.end()) {
@@ -152,7 +152,7 @@ pTable Table::Deserialize(const string& content){
 	返回符合条件的下标数组
 	condition[columnName]=pCase
 */
-vector<int> Table::parseConditions(vector<vector<Condition>> condition) {
+vector<int> Table::parseConditions(vector<vector<Condition>>&& condition) {
 	vector<int> ret;
 	if (condition.size() == 0) {
 		for (int i = 0; i < rows; i++) ret.push_back(i);

@@ -112,7 +112,7 @@ pAction Parser::parse(string& input) {
 		}
 		conditions.push_back(tmpconditions);
 	}
-	static_cast<TableOpAction*>(action)->setCondition(conditions);
+	static_cast<TableOpAction*>(action)->setCondition(std::move(conditions));
 	return action;
 }
 
@@ -144,7 +144,7 @@ pAction Parser::select(string& str,pEngine engine) {
 		auto table = engine->getCurrentDb()->getTable(tableStr);
 		cs = table->getColNames();
 	}
-	action->setColumns(cs);
+	action->setColumns(std::move(cs));
 	return action;
 }
 
@@ -299,7 +299,7 @@ pAction Parser::createTb(string& str, pEngine engine) {
 		is >> colname>>type;
 		constraint = "";
 		while (is >> constraintpart) constraint += constraintpart;
-		action->addItem(colname, str2type(type), str2constraints(constraint));
+		action->addItem(colname, std::move(str2type(type)), std::move(str2constraints(constraint)));
 	}
 	col=cols[len - 1];	//最后一个子句：primary key(stu_id)
 	int leftParentthis = col.find("(");

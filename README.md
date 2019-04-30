@@ -5,17 +5,13 @@
 A very weak light DB for oop.<br/>
 
 # 优化
-* 引用
-* 移动构造
 * 析构
 * 异常处理
 * stringstream用static防止重复初始化
-* string的+改成+=
-* 不安全的函数：strcpy,sprintf
+* string的+改成++
 * 注释
 * 一些尚未用typedef优雅化的指针
-* 字典序输出表名
-
+* 将空的cpp删掉，改成hpp
 
 ## 重要：Database中有一处错误
 erase的方法不对，有空就改。<br/>

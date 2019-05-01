@@ -4,8 +4,11 @@
 # lightDB
 A very weak light DB for oop.<br/>
 
+# 测试
+在x64/Release下找到test.sh文件，在linux下执行./test.sh。<br/>
+如果出现12345678910则通过。<br/>
+
 # 优化
-* 新的测试样例
 * stringstream用static防止重复初始化
 * string的+改成++
 * 注释

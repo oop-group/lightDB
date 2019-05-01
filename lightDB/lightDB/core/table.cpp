@@ -6,7 +6,16 @@ int Table::getColumnLength(string name) {
 	return columnObjs[name]->length();
 }
 
-
+Table::~Table()
+{
+	for (auto iter = columnObjs.begin(); iter != columnObjs.end(); iter++) {
+		if (iter->second != nullptr) {
+			delete iter->second;
+			iter->second = nullptr;
+		}
+	}
+	columnObjs.clear();
+}
 /*
 		添加新的一列
 	*/

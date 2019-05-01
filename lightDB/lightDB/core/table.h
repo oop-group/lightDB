@@ -20,7 +20,7 @@ class Table: public Serializable{
 	vector<int> parseConditions(vector<vector<Condition>>&& condition);	
 public:
 	Table() :rows(0) {}
-
+	~Table();
 	void addColumn(string name,  pColumn c);
 	pColumn getColumn(const string& name);
 	int length() { return rows; }

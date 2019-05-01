@@ -6,6 +6,17 @@ void Database::createTable(string tablename, pTable table){
     names.push_back(tablename);
     tableObjs[tablename]=table;
 }
+
+Database::~Database() {
+	for (auto iter = tableObjs.begin(); iter != tableObjs.end(); iter++) {
+		if (iter->second != nullptr) {
+			delete iter->second;
+			iter->second = nullptr;
+		}
+	}
+	tableObjs.clear();
+}
+
 void Database::dropTable(const string& name){
     auto it=find(names.begin(),names.end(),name);
     if(it!=names.end()){

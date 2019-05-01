@@ -19,6 +19,15 @@ protected:
 public:
 	Column(ColumnType&& ts, vector<ColumnConstraint>&& cs);
 	Column() {}
+	~Column() {
+		for (auto iter = values.begin(); iter != values.end(); iter++) {
+			if (*iter != nullptr) {
+				delete *iter;
+				*iter = nullptr;
+			}
+		}
+		values.clear();
+	}
 	void addConstraint(ColumnConstraint&& c) { constraints.push_back(c); }
 	/*
 		（可能没用的）私有成员访问接口

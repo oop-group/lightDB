@@ -19,6 +19,16 @@ Engine::Engine() {
 	actionMap["createtb"] = ecreateTb;
 }
 
+Engine::~Engine() {
+	for (auto iter = databaseObjs.begin(); iter != databaseObjs.end(); iter++) {
+		if (iter->second != nullptr) {
+			delete iter->second;
+			iter->second = nullptr;
+		}
+	}
+	databaseObjs.clear();
+}
+
 /*
 	接受用户输入，执行sql语句，打印结果
 */
@@ -45,6 +55,7 @@ void Engine::run() {
 string Engine::execute(string& str) {
 	Action* action = Parser(this).parse(str);
 	string ret=actionMap[action->getType()](this,action);
+	delete action;
 	return ret;
 }
 
@@ -75,7 +86,7 @@ string esearch(pEngine engine,pAction action) {
 	vector<Record> ret= table->search(colnames,std::move(condition));
 	if (ret.size() == 0) return "";
 	string retStr;
-	char tmpint[10], tmpfloat[100];
+	char tmpint[15], tmpfloat[60];
 	int i = 0,len=colnames.size();
 	for (; i < len; i++) {
 		retStr += colnames[i];
@@ -90,11 +101,11 @@ string esearch(pEngine engine,pAction action) {
 			switch (table->getColumn(it->first)->getType())
 			{
 			case ColumnType::INT:
-				snprintf(tmpint, 11,"%d", it->second->getIntV());
+				snprintf(tmpint, 15,"%d", it->second->getIntV());
 				retStr += tmpint;
 				break;
 			case ColumnType::DOUBLE:
-				snprintf(tmpfloat, 101,"%f", it->second->getDoubleV());
+				snprintf(tmpfloat, 60,"%f", it->second->getDoubleV());
 				retStr += tmpfloat;
 				break;
 			case ColumnType::CHAR:

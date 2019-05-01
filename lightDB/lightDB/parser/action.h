@@ -15,6 +15,7 @@ class Action {
 protected:
 	string type;			//"search","update",etc
 public:
+	virtual ~Action(){}
 	void setType(string s) { type = s; }
 	string getType() { return type; }
 };
@@ -26,6 +27,18 @@ class TableOpAction:public Action {
 	string table;
 	vector<vector<Condition>> conditions;
 public:
+	virtual ~TableOpAction() {	//É¾³ýconditionÖÐµÄpcase
+		for (int i = 0, len = conditions.size(); i < len; i++) {
+			for (int j = 0, len1 = conditions[0].size(); j < len1; j++) {
+				if (conditions[i][j].second != nullptr) {
+					delete conditions[i][j].second;
+					conditions[i][j].second = nullptr;
+				}
+			}
+			conditions[i].clear();
+		}
+		conditions.clear();
+	}
 	void setTable(string t) { table = t; }
 	string getTable() { return table; }
 	void setCondition(vector<vector<Condition>>&& cs) { conditions = cs; }

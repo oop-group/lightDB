@@ -4,4 +4,8 @@
     <LocalDebuggerCommandArguments>&lt;table_op.sql &gt;table_op_cp.out</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+    <LocalDebuggerCommandArguments>&lt;table_op.sql &gt;table_op_cp.out</LocalDebuggerCommandArguments>
+  </PropertyGroup>
 </Project>

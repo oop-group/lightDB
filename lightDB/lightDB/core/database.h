@@ -15,6 +15,7 @@ class Database: public Serializable{
     vector<string> names;         //按照建立顺序保存表名
 
 public:
+	~Database();
     //私有接口
     int getSize() const {return names.size();}
 	vector<string> getNames() { return names; }

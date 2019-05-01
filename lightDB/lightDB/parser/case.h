@@ -12,6 +12,7 @@ protected:
 	pData value;
 public:
 	virtual bool check(pData p)=0;
+	virtual ~Case() { delete value; }
 };
 
 class Incase :public Case {

@@ -16,6 +16,7 @@ class Engine {
 	
 public:
 	Engine();
+	~Engine();
 	void run();				
 	string execute(string& s);		
 	vector<string> getNames() { return dbNames; }

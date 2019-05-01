@@ -138,6 +138,25 @@ pData Data::Deserialize(const string& content){
     }
 }
 
+string toString(pData d) {
+	if (d == nullptr) return "NULL";
+	char retint[20],retdouble[100];
+	switch (d->getType())
+	{
+	case ColumnType::INT:
+		snprintf(retint, 20, "%d", d->getIntV());
+		return retint;
+	case ColumnType::DOUBLE:
+		snprintf(retdouble, 100, "%.4f",d->getDoubleV());
+		return retdouble;
+	case ColumnType::CHAR:
+		return d->getCharV();
+	default:
+		//error
+		break;
+	}
+}
+
 
 bool Data::operator==(const Data& d) {
 	if (d.getType() != type) return false;

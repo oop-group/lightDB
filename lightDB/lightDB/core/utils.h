@@ -57,21 +57,25 @@ public:
 	Data(const char* v);
 	Data(const Data& d);
 	~Data();
+
 	void operator=(const Data&);
 	friend ostream& operator<<(ostream& out, const Data& d);
-	int getIntV() const{ return intV; }
-	double getDoubleV() const{ return doubleV; }
-	int getPrecision()const { return precision; }
-	char* getCharV() const{ return charV; }
-	ColumnType getType() const{ return type; }
-	string Serialize();
-	static pData Deserialize(const string& content);
 	bool operator==(const Data& d1);
 	bool operator!=(const Data& d1);
 	bool operator<(const Data& d1);
 	bool operator>(const Data& d1);
 	bool operator>=(const Data& d);
 	bool operator<=(const Data& d);
+
+	int getIntV() const{ return intV; }
+	double getDoubleV() const{ return doubleV; }
+	int getPrecision()const { return precision; }
+	char* getCharV() const{ return charV; }
+	ColumnType getType() const{ return type; }
+
+	string Serialize();				//写入文件格式
+	friend string toString(pData d);				//输出到控制台格式
+	static pData Deserialize(const string& content);
 
 };
 

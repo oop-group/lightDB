@@ -124,8 +124,6 @@
     <ClCompile Include="os\s_char.cpp" />
     <ClCompile Include="os\s_double.cpp" />
     <ClCompile Include="os\s_int.cpp" />
-    <ClCompile Include="parser\action.cpp" />
-    <ClCompile Include="parser\case.cpp" />
     <ClCompile Include="parser\mystring.cpp" />
     <ClCompile Include="parser\parser.cpp" />
   </ItemGroup>
@@ -139,8 +137,8 @@
     <ClInclude Include="os\s_char.h" />
     <ClInclude Include="os\s_double.h" />
     <ClInclude Include="os\s_int.h" />
-    <ClInclude Include="parser\action.h" />
-    <ClInclude Include="parser\case.h" />
+    <ClInclude Include="parser\action.hpp" />
+    <ClInclude Include="parser\case.hpp" />
     <ClInclude Include="parser\mystring.h" />
     <ClInclude Include="parser\parser.h" />
     <ClInclude Include="rename\rename.h" />

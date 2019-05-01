@@ -22,7 +22,6 @@ typedef Data* pData;
 typedef Database* pDatabase;
 typedef Case* pCase;
 typedef Action* pAction;
-//typedef vector<pair<string, Data*>> Record;
 typedef Engine* pEngine;
 typedef pair<string, pCase> Condition;
 typedef Condition* pCondition;

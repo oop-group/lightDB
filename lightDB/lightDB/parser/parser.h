@@ -1,8 +1,8 @@
 #pragma once
 #include <string>
 #include <map>
-#include "action.h"
-#include "case.h"
+#include "action.hpp"
+#include "case.hpp"
 #include "../rename/rename.h"
 
 using namespace std;

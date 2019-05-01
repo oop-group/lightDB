@@ -87,7 +87,7 @@ bool isBlank(string& str) {
 	return cnt == 0;
 }
 
-string strip(string& str) {
+string strip(string&& str) {
 	int i = 0, len = str.size();
 	while (i < len) {
 		char c = str[i];
@@ -102,6 +102,12 @@ string strip(string& str) {
 	}
 	return str.substr(i, r - i + 1);
 }
+
+string strip(string& str) {
+	string tmp = str;
+	return strip(std::move(tmp));
+}
+
 /*
 	È¥µô¿Õ°××Ö·û
 */

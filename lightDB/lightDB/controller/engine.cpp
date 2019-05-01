@@ -116,35 +116,12 @@ string esearch(pEngine engine,pAction action) {
 	for (; i < len1; i++) {	
 		Record record = ret[i];		//返回结果中第i条记录
 		for (int j=0;j<len;j++){		//结果中的一列
-			switch (table->getColumn(colnames[j])->getType())
-			{
-			case ColumnType::INT:
-				if (record[colnames[j]] == nullptr) retStr += "NULL";
-				else {
-					snprintf(tmpint, 15, "%d", record[colnames[j]]->getIntV());
-					retStr += tmpint;
-				}
-				break;
-			case ColumnType::DOUBLE:
-				if (record[colnames[j]] == nullptr) retStr += "NULL";
-				else {
-					snprintf(tmpfloat, 60, "%.4f", record[colnames[j]]->getDoubleV());
-					retStr += tmpfloat;
-				}
-				break;
-			case ColumnType::CHAR:
-				if (record[colnames[j]] == nullptr) retStr += "NULL";
-				else  retStr += string(record[colnames[j]]->getCharV());
-				break;
-			default:
-				break;
-			}
-			retStr.push_back('\t');	
+			retStr += toString(record[colnames[j]]);
+			retStr+='\t';	
 		}
 		retStr[retStr.size() - 1] = '\n';
 	}
 	return retStr;
-	return "";
 }
 
 string eupdate(pEngine engine,pAction action) {
@@ -198,12 +175,10 @@ string eshowcol(pEngine engine, pAction action) {
 		it = find(css.begin(), css.end(), ColumnConstraint::PRIMARY);
 		ret += (it != css.end()) ? "PRI" : "";
 		ret+='\t';
-		/*
-			default和extra暂时用不到，所以没有写
-		*/
-		ret+="NULL";	//default
-		ret += "\t\n";	//extra
-		
+		ret += toString(col->getDefaultValue());	//default
+		ret += '\t';
+		ret += col->getExtra();						//extra
+		ret += '\n';
 	}
 	return ret;
 }

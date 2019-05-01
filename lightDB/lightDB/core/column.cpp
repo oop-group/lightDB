@@ -5,6 +5,7 @@ Column::Column(ColumnType&& t, vector<ColumnConstraint>&& cs)
 	constraints = cs;
 	type = t;
 	defaultValue = nullptr;
+	extra = "";
 }
 /*
     Column±àÂë·½Ê½£¨°´byte£©

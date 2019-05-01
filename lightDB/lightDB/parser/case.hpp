@@ -1,5 +1,9 @@
 #pragma once
 
+#include <string>
+#include "../core/utils.h"
+#include "../rename/rename.h"
+
 /*
 	条件判断类
 	存储判断符号、用于判断的值

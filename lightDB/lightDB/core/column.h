@@ -17,10 +17,11 @@ class Column: public Serializable{
 protected:
 	vector<ColumnConstraint> constraints;	//约束类型
 	pData defaultValue;	
+	string extra;
 	vector<pData> values;
 public:
 	Column(ColumnType&& ts, vector<ColumnConstraint>&& cs);
-	Column() { defaultValue = nullptr; }
+	Column() { defaultValue = nullptr; extra = ""; }
 	~Column() {
 		for (auto iter = values.begin(); iter != values.end(); iter++) {
 			if (*iter != nullptr) {
@@ -38,12 +39,13 @@ public:
 	vector<ColumnConstraint> getConstraints() const{ return constraints; }
 	ColumnType getType() const{ return type; }
 	pData getDefaultValue() { return defaultValue; }
+	string getExtra() { return extra; }
+	void setExtra(string s) { extra=s; }
 	/*
 		增
 	*/
 	void add(pData data) {
 		values.push_back(data);
-		//rows++;
 	}
 	/*
 		删

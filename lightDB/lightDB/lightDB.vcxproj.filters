@@ -36,9 +36,6 @@
     <ClCompile Include="parser\parser.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="parser\action.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="parser\mystring.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -49,9 +46,6 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="os\s_int.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="parser\case.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -77,9 +71,6 @@
     <ClInclude Include="parser\parser.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="parser\action.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="parser\mystring.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -95,7 +86,10 @@
     <ClInclude Include="os\serializable.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="parser\case.h">
+    <ClInclude Include="parser\action.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="parser\case.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

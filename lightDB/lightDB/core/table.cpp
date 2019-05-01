@@ -1,6 +1,6 @@
 #include<algorithm>
 #include "table.h"
-#include "../parser/case.h"
+#include "../parser/case.hpp"
 
 int Table::getColumnLength(string name) {
 	return columnObjs[name]->length();

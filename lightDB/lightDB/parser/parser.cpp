@@ -91,17 +91,14 @@ pAction Parser::parse(string& input) {
 			while (it != caseMap.end()) {
 				pos = expr.find(it->first);	//操作符在pos中的位置
 				if (pos != string::npos) {	//找到正确操作符
-					col = expr.substr(0, pos);
-					col = strip(col);
+					col = strip(expr.substr(0, pos));
 					op = it->first;
-					value = expr.substr(pos + op.size(), expr.size() - pos - op.size());
-					value = strip(value);
+					value = strip(expr.substr(pos + op.size(), expr.size() - pos - op.size()));
 					auto colObj = engine->getCurrentDb()->getTable(static_cast<TableOpAction*>(action)->getTable())->getColumn(col);
 					switch (colObj->getType())
 					{
 					case ColumnType::CHAR:
-						value = value.substr(1, value.size() - 2);	//去掉引号
-						value = strip(value);
+						value = strip(value.substr(1, value.size() - 2));	//去掉引号
 						tmpconditions.push_back(make_pair(col, caseMap[op](new Data(value.c_str()))));
 						break;
 					case ColumnType::DOUBLE:
@@ -206,8 +203,7 @@ pAction Parser::update(string& str,pEngine engine) {
 	switch (colType)
 	{
 	case ColumnType::CHAR:
-		value = value.substr(1, value.size() - 2);	//去掉引号
-		value = strip(value);
+		value = strip(value.substr(1, value.size() - 2));	//去掉引号
 		action->setData(col, new Data(value.c_str()));
 		break;
 	case ColumnType::DOUBLE:
@@ -235,11 +231,9 @@ pAction Parser::insert(string& str,pEngine engine) {
 	istringstream is(tmp[0]);
 	int startInto = tmp[0].find("into");
 	if (startInto == string::npos) startInto = tmp[0].find("INTO");
-	string expr = tmp[0].substr(startInto + 5, tmp[0].size() - 5 - startInto);
-	expr = strip(expr);
+	string expr = strip(tmp[0].substr(startInto + 5, tmp[0].size() - 5 - startInto));
 	int leftParenthesis = expr.find("(");
-	string table = expr.substr(0, leftParenthesis);
-	table = strip(table);
+	string table = strip(expr.substr(0, leftParenthesis));
 	action->setTable(table);
 	int rightParenthesis = expr.find(")");
 	string colnamesStr = expr.substr(leftParenthesis + 1, rightParenthesis - leftParenthesis - 1);
@@ -253,15 +247,13 @@ pAction Parser::insert(string& str,pEngine engine) {
 	vector<string> values = split(valuesStr, ",");
 	filterSpace(values);							//["2018011343","a"]
 	for (int i = 0, len = colnames.size(); i < len; i++) {
-		string value = values[i];
+		string value = strip(values[i]);
 		string col = colnames[i];
 		ColumnType colType = engine->getCurrentDb()->getTable(table)->getColumn(col)->getType();
-		value = strip(value);
 		switch (colType)
 		{
 		case ColumnType::CHAR:
-			value = value.substr(1, value.size() - 2);	//去掉引号
-			value = strip(value);
+			value = strip(value.substr(1, value.size() - 2));	//去掉引号
 			action->setData(col, new Data(value.c_str()));
 			break;
 		case ColumnType::DOUBLE:
@@ -299,11 +291,9 @@ pAction Parser::createTb(string& str, pEngine engine) {
 	string cmd;
 	int tmp = str.find("table");
 	if (tmp == string::npos) tmp = str.find("TABLE");
-	str = str.substr(tmp + 6, str.size() - tmp-6);	//从table结束后开始的部分
-	str = strip(str);
+	str = strip(str.substr(tmp + 6, str.size() - tmp-6));	//从table结束后开始的部分
 	tmp = str.find("(");
-	string table = str.substr(0, tmp);//表名
-	table = strip(table);
+	string table = strip(str.substr(0, tmp));//表名
 	action->setTable(table);	//数据表名
 	string expr = str.substr(tmp + 1, str.size() - tmp - 2);
 	vector<string> cols = split(expr,",");		//一系列插入列的子句
@@ -315,8 +305,7 @@ pAction Parser::createTb(string& str, pEngine engine) {
 		is >> colname>>type;		
 		if (colname == "primary" || colname == "PRIMARY") {	//primary key(列名)
 			int tmp1 = col.find("(");
-			string keyColName = col.substr(tmp1 + 1, col.size() - 2 - tmp1);	//主键所在的列名
-			keyColName = strip(keyColName);
+			string keyColName = strip(col.substr(tmp1 + 1, col.size() - 2 - tmp1));	//主键所在的列名
 			action->setPrimaryKey(keyColName);
 		}
 		else {

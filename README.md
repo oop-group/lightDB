@@ -5,19 +5,12 @@
 A very weak light DB for oop.<br/>
 
 # 优化
-* 析构
-* 异常处理
+* 新的测试样例
 * stringstream用static防止重复初始化
 * string的+改成++
 * 注释
 * 一些尚未用typedef优雅化的指针
 * 将空的cpp删掉，改成hpp
-
-## 重要：Database中有一处错误
-erase的方法不对，有空就改。<br/>
-
-## 重要：不安全的拷贝函数strcpy
-先这么写着，以后统一改为strcpy_s<br/>
 
 
 问题：<br/>

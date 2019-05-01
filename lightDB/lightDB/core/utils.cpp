@@ -232,3 +232,16 @@ vector<ColumnConstraint> str2constraints(string& str) {
 	}
 	return ret;
 }
+
+bool Record::operator<(const Record& other) const { 
+	if (record.find(key)!=record.end())				//如果主键列在返回结果中
+		return *(getKeyVal()) < *(other.getKeyVal());	//按照主键排序
+	return 0;										//否则按照插入顺序排序
+}
+
+pData Record:: getKeyVal() const {
+	auto iter = record.find(key);
+	if (iter != record.end()) return iter->second;
+	return nullptr;
+}
+

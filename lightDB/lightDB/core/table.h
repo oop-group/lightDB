@@ -18,15 +18,17 @@ class Table: public Serializable{
 
 	int getColumnLength(string name);	//指定名称列的记录数
 	vector<int> parseConditions(vector<vector<Condition>>&& condition);	
+	string keyCol;
 public:
-	Table() :rows(0) {}
+	Table() :rows(0) { keyCol = ""; }
 	~Table();
 	void addColumn(string name,  pColumn c);
 	pColumn getColumn(const string& name);
 	int length() { return rows; }
 	int cols() { return columnObjs.size(); }
 	vector<string> getColNames() { return names; }
-
+	void setKeyCol(string name) { keyCol = name; }	//设置主键列
+	string getKeyCol() { return keyCol; }
 	/*
 		增删查改
 	*/

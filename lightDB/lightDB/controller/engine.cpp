@@ -109,39 +109,42 @@ string esearch(pEngine engine,pAction action) {
 	}
 	retStr[retStr.size() - 1] = '\n';
 	i = 0;
-	len = ret.size();
-	for (; i < len; i++) {	//一条记录
-		auto it = ret[i].begin();
-		while (it != ret[i].end()) {	//一个字段
-			switch (table->getColumn(it->first)->getType())
+	int len1 = ret.size();
+	//将record按照主键排序
+	sort(ret.begin(), ret.end());
+
+	for (; i < len1; i++) {	
+		Record record = ret[i];		//返回结果中第i条记录
+		for (int j=0;j<len;j++){		//结果中的一列
+			switch (table->getColumn(colnames[j])->getType())
 			{
 			case ColumnType::INT:
-				if (it->second == nullptr) retStr += "NULL\t";
+				if (record[colnames[j]] == nullptr) retStr += "NULL";
 				else {
-					snprintf(tmpint, 15, "%d", it->second->getIntV());
+					snprintf(tmpint, 15, "%d", record[colnames[j]]->getIntV());
 					retStr += tmpint;
 				}
 				break;
 			case ColumnType::DOUBLE:
-				if (it->second == nullptr) retStr += "NULL\t";
+				if (record[colnames[j]] == nullptr) retStr += "NULL";
 				else {
-					snprintf(tmpfloat, 60, "%f", it->second->getDoubleV());
+					snprintf(tmpfloat, 60, "%.4f", record[colnames[j]]->getDoubleV());
 					retStr += tmpfloat;
 				}
 				break;
 			case ColumnType::CHAR:
-				if (it->second == nullptr) retStr += "NULL\t";
-				else  retStr += string(it->second->getCharV());
+				if (record[colnames[j]] == nullptr) retStr += "NULL";
+				else  retStr += string(record[colnames[j]]->getCharV());
 				break;
 			default:
 				break;
 			}
 			retStr.push_back('\t');	
-			it++;
 		}
 		retStr[retStr.size() - 1] = '\n';
 	}
 	return retStr;
+	return "";
 }
 
 string eupdate(pEngine engine,pAction action) {
@@ -164,6 +167,7 @@ string ecreateTb(pEngine engine, pAction action) {
 		table->addColumn(item.getColName(),c);
 	}
 	string keyname = caction->getKeyName();
+	table->setKeyCol(keyname);
 	auto c = table->getColumn(keyname);
 	c->addConstraint(ColumnConstraint::PRIMARY);
 	engine->getCurrentDb()->createTable(caction->getTable(), table);

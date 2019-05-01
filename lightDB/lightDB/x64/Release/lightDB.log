@@ -1,18 +1,18 @@
 ﻿  engine.cpp
 d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\core\column.h(37): warning C4267: “return”: 从“size_t”转换到“int”，可能丢失数据
-d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\core\table.h(27): warning C4267: “return”: 从“size_t”转换到“int”，可能丢失数据
+d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\core\table.h(28): warning C4267: “return”: 从“size_t”转换到“int”，可能丢失数据
 d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\core\database.h(20): warning C4267: “return”: 从“size_t”转换到“int”，可能丢失数据
 d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\parser\action.h(31): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
 d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\parser\action.h(32): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
 d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\parser\action.h(34): warning C4150: 删除指向不完整“Case”类型的指针；没有调用析构函数
-  d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\rename\rename.h(15): note: 参见“Case”的声明
+  d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\rename\rename.h(16): note: 参见“Case”的声明
 d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\controller\engine.cpp(105): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
-d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\controller\engine.cpp(112): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
-d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\controller\engine.cpp(185): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
-d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\controller\engine.cpp(227): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\controller\engine.cpp(112): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\controller\engine.cpp(189): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+d:\courses\this_semester\oop\homework\big_work\lightdb\lightdb\lightdb\controller\engine.cpp(231): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
   正在生成代码
-  2 of 2524 functions (<0.1%) were compiled, the rest were copied from previous compilation.
+  1 of 2506 functions (<0.1%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    3 functions had inline decision re-evaluated but remain unchanged
+    1 functions had inline decision re-evaluated but remain unchanged
   已完成代码的生成
   lightDB.vcxproj -> D:\courses\this_semester\oop\homework\big_work\lightDB\lightDB\x64\Release\lightDB.exe

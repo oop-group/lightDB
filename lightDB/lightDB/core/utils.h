@@ -44,6 +44,7 @@ enum class ColumnConstraint {
 class Data: public Serializable{
 	ColumnType type;
 	int charLen;
+	int precision;	//浮点数小数点后保留几位
 	union {
 		int intV;
 		double doubleV;
@@ -52,7 +53,7 @@ class Data: public Serializable{
 public:
 	Data():charLen(0){}
 	Data(int v):intV(v),charLen(0),type(ColumnType::INT){}
-	Data(double v):doubleV(v),charLen(0),type(ColumnType::DOUBLE){}
+	Data(double v):doubleV(v),charLen(0),precision(4),type(ColumnType::DOUBLE){}
 	Data(const char* v);
 	Data(const Data& d);
 	~Data();
@@ -60,6 +61,7 @@ public:
 	friend ostream& operator<<(ostream& out, const Data& d);
 	int getIntV() const{ return intV; }
 	double getDoubleV() const{ return doubleV; }
+	int getPrecision()const { return precision; }
 	char* getCharV() const{ return charV; }
 	ColumnType getType() const{ return type; }
 	string Serialize();
@@ -71,6 +73,16 @@ public:
 	bool operator>=(const Data& d);
 	bool operator<=(const Data& d);
 
+};
+
+class Record {
+	map<string, pData> record;
+	string key;
+public:
+	pData& operator[](string name) { return record[name]; }
+	void setKey(string k) { key = k; }
+	pData getKeyVal() const;
+	bool operator<(const Record& other) const;
 };
 
 class MapClass {

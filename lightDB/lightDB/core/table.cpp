@@ -62,9 +62,10 @@ vector<Record> Table::search(vector<string> colNames,vector<vector<Condition>>&&
 	vector<int> matchIdx=parseConditions(std::move(condition));				//符合条件的下标
 	for (auto i : matchIdx) {
 		Record ret;
+		ret.setKey(keyCol);
 		for (auto colName:colNames) {
 			auto p = columnObjs[colName];
-			ret.push_back(make_pair(colName,p->getData(i)));
+			ret[colName] = p->getData(i);
 		}
 		rets.push_back(ret);
 	}

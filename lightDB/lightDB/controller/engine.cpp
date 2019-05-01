@@ -6,6 +6,19 @@
 
 using namespace std;
 
+void Engine::dropDatabase(string name) {
+	if (databaseObjs[name] == currentDb) {
+		currentDb = nullptr;
+	}
+	databaseObjs.erase(name);
+	for (auto iter = dbNames.begin(); iter != dbNames.end(); iter++) {
+		if (*iter == name) {
+			dbNames.erase(iter);
+			break;
+		}
+	}
+}
+
 Engine::Engine() {
 	actionMap["insert"] = einsert;
 	actionMap["delete"] = edel;
@@ -14,7 +27,9 @@ Engine::Engine() {
 	actionMap["use"] = euse;
 	actionMap["show"] = eshow;
 	actionMap["showcol"] = eshowcol;
+	actionMap["showtable"] = eshowtable;
 	actionMap["dropdb"] = edropDb;
+	actionMap["droptb"] = edropTb;
 	actionMap["createdb"] = ecreateDb;
 	actionMap["createtb"] = ecreateTb;
 }
@@ -101,15 +116,22 @@ string esearch(pEngine engine,pAction action) {
 			switch (table->getColumn(it->first)->getType())
 			{
 			case ColumnType::INT:
-				snprintf(tmpint, 15,"%d", it->second->getIntV());
-				retStr += tmpint;
+				if (it->second == nullptr) retStr += "NULL\t";
+				else {
+					snprintf(tmpint, 15, "%d", it->second->getIntV());
+					retStr += tmpint;
+				}
 				break;
 			case ColumnType::DOUBLE:
-				snprintf(tmpfloat, 60,"%f", it->second->getDoubleV());
-				retStr += tmpfloat;
+				if (it->second == nullptr) retStr += "NULL\t";
+				else {
+					snprintf(tmpfloat, 60, "%f", it->second->getDoubleV());
+					retStr += tmpfloat;
+				}
 				break;
 			case ColumnType::CHAR:
-				retStr += string(it->second->getCharV());
+				if (it->second == nullptr) retStr += "NULL\t";
+				else  retStr += string(it->second->getCharV());
 				break;
 			default:
 				break;
@@ -150,7 +172,7 @@ string ecreateTb(pEngine engine, pAction action) {
 
 string euse(pEngine engine,pAction action) {
 	UseAction* uaction = static_cast<UseAction*>(action);
-	engine->setCurrentDb(engine->databaseObjs[uaction->getDbName()]);
+	engine->setCurrentDb(uaction->getDbName());
 	return "";
 }
 
@@ -182,6 +204,19 @@ string eshowcol(pEngine engine, pAction action) {
 	return ret;
 }
 
+string eshowtable(pEngine engine, pAction action) {
+	string ret = "Tables_in_";
+	ret+= engine->getCurrentDbName();
+	ret+= '\n';
+	auto tables = engine->getCurrentDb()->getNames();
+	sort(tables.begin(), tables.end());
+	for (auto table : tables) {
+		ret+= table;
+		ret+= '\n';
+	}
+	return ret;
+}
+
 //show databases
 string eshow(pEngine engine, pAction action) {
 	vector<string> names = engine->getNames();
@@ -207,6 +242,12 @@ string eshow(pEngine engine, pAction action) {
 string edropDb(pEngine engine, pAction action) {
 	DropDbAction* daction = static_cast<DropDbAction*>(action);
 	engine->dropDatabase(daction->getDbName());
+	return "";
+}
+
+string edropTb(pEngine engine, pAction action) {
+	DropTbAction* taction = static_cast<DropTbAction*>(action);
+	engine->getCurrentDb()->dropTable(taction->getTable());
 	return "";
 }
 

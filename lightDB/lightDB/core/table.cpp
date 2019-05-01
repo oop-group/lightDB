@@ -109,15 +109,17 @@ void Table::update(map<string,pData>& datas,vector<vector<Condition>>&& conditio
 }
 
 /*
-	增
+	插入新的一行
 */
 void Table::insert(map<string, pData>& datas) {
-	auto iter = datas.begin();
-	while (iter != datas.end()) {
-		string name = iter->first;
-		pData data = iter->second;
-		columnObjs[name]->add(data);
-		iter++;
+	for (auto name : names) {
+		auto col = columnObjs[name];
+		if (datas.find(name)!=datas.end()) {
+			col->add(datas[name]);
+		}
+		else {
+			col->add(col->getDefaultValue());
+		}
 	}
 	rows++;
 }
@@ -171,11 +173,10 @@ vector<int> Table::parseConditions(vector<vector<Condition>>&& condition) {
 		for (int j = 0, len1 = condition.size(); j < len1; j++) {	//对每个or语句
 			bool match = true;		//该条记录是否满足所有and子句
 			for (int k = 0, len2 = condition[j].size(); k < len2; k++) {	//对每个and子句
-				auto pair = condition[j][k];	//pair(colname,case)
-				string colName = pair.first;
-				pCase c = pair.second;
-				auto col = getColumn(colName);
-				auto data = col->getData(i);
+				string colName=condition[j][k].first;	//pair(colname,case)
+				pCase c = condition[j][k].second;
+				pColumn col = getColumn(colName);
+				pData data = col->getData(i);
 				bool checked = c->check(data);
 				if (!checked) {	//一个and子句不成立
 					match = false;

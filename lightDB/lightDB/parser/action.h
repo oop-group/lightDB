@@ -127,7 +127,15 @@ public:
 class DropDbAction :public DatabaseOpAction{
 };
 
+class DropTbAction :public TableOpAction {
+
+};
+
 class ShowColAction :public TableOpAction {
+};
+
+class ShowTableAction :public Action {
+
 };
 
 class CreateDbAction :public DatabaseOpAction{

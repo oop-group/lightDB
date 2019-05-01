@@ -23,7 +23,9 @@ private:
 	static pAction use(string& str, pEngine engine);
 	static pAction show(string& str, pEngine engine);
 	static pAction showCol(string& str, pEngine engine);
+	static pAction showTable(string& str, pEngine engine);
 	static pAction dropDb(string& str, pEngine engine);
+	static pAction dropTb(string& str, pEngine engine);
 	static pAction createDb(string& str, pEngine engine);
 
 	map<string, pActionFunc> actionMap;	

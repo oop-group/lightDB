@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <string>
+#include <memory>
 #include "utils.h"
 #include "../rename/rename.h"
 #include "../os/serializable.h"
@@ -15,10 +16,11 @@ class Column: public Serializable{
 	ColumnType type;						//数据类型
 protected:
 	vector<ColumnConstraint> constraints;	//约束类型
+	pData defaultValue;	
 	vector<pData> values;
 public:
 	Column(ColumnType&& ts, vector<ColumnConstraint>&& cs);
-	Column() {}
+	Column() { defaultValue = nullptr; }
 	~Column() {
 		for (auto iter = values.begin(); iter != values.end(); iter++) {
 			if (*iter != nullptr) {
@@ -35,6 +37,7 @@ public:
 	int length() const { return values.size(); }
 	vector<ColumnConstraint> getConstraints() const{ return constraints; }
 	ColumnType getType() const{ return type; }
+	pData getDefaultValue() { return defaultValue; }
 	/*
 		增
 	*/

@@ -203,7 +203,7 @@ map<string, ColumnConstraint> MapClass::constraintMap = {
 };
 map<ColumnType, string> MapClass::strMap = {
 	{ColumnType::INT,"int(11)"},
-	{ColumnType::DOUBLE,"double(5,2)"},
+	{ColumnType::DOUBLE,"double"},
 	{ColumnType::CHAR,"char(1)"}
 };
 /*

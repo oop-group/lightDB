@@ -24,7 +24,9 @@ Parser::Parser(Engine* e) {
 	actionMap["USE"] = use;
 	actionMap["SHOWDATABASES"] = show;
 	actionMap["SHOWCOLUMNS"] = showCol;
-	actionMap["DROP"] = dropDb;
+	actionMap["SHOWTABLES"] = showTable;
+	actionMap["DROPDATABASE"] = dropDb;
+	actionMap["DROPTABLE"] = dropTb;
 	actionMap["CREATEDATABASE"] = createDb;
 	/*
 		操作符-判断类一览表
@@ -54,6 +56,11 @@ pAction Parser::parse(string& input) {
 		actionType += upper(tableOrDb);
 	}
 	else if (actionType == "SHOW") {
+		string tableOrDbOrColumn;		//show tables还是show databases还是show columns
+		is0 >> tableOrDbOrColumn;
+		actionType += upper(tableOrDbOrColumn);
+	}
+	else if (actionType == "DROP") {
 		string tableOrDb;
 		is0 >> tableOrDb;
 		actionType += upper(tableOrDb);
@@ -155,6 +162,12 @@ pAction Parser::showCol(string& str, pEngine engine) {
 	istringstream is(str);
 	is >> cmd >> cmd >> from>>table;		//show columns from
 	action->setTable(table);
+	return action;
+}
+
+pAction Parser::showTable(string& str, pEngine engine) {
+	ShowTableAction* action = new ShowTableAction();
+	action->setType("showtable");
 	return action;
 }
 
@@ -277,35 +290,41 @@ pAction Parser::del(string& str,pEngine engine) {
 	return action;
 }
 
+/*			
+	create table
+*/
 pAction Parser::createTb(string& str, pEngine engine) {
 	CreateTbAction* action = new CreateTbAction();
 	action->setType("createtb");
 	string cmd;
 	int tmp = str.find("table");
 	if (tmp == string::npos) tmp = str.find("TABLE");
-	str = str.substr(tmp + 6, str.size() - tmp-6);
+	str = str.substr(tmp + 6, str.size() - tmp-6);	//从table结束后开始的部分
 	str = strip(str);
 	tmp = str.find("(");
-	string table = str.substr(0, tmp);
+	string table = str.substr(0, tmp);//表名
 	table = strip(table);
 	action->setTable(table);	//数据表名
-	string expr = str.substr(tmp + 1, str.size() - tmp - 3);
-	vector<string> cols = split(expr,",");	
+	string expr = str.substr(tmp + 1, str.size() - tmp - 2);
+	vector<string> cols = split(expr,",");		//一系列插入列的子句
 	string colname, type, constraint,constraintpart,col;
 	int len = cols.size();
-	for (int i = 0; i < len - 1; i++) {	//前n-1个子句:stu_id int not null
-		col = cols[i];
+	for (int i = 0; i < len; i++) {//两种类型：列名 类型 [约束] 或者primary key(列名)
+		col = cols[i];				//一个插入列的子句
 		istringstream is(col);
-		is >> colname>>type;
-		constraint = "";
-		while (is >> constraintpart) constraint += constraintpart;
-		action->addItem(colname, std::move(str2type(type)), std::move(str2constraints(constraint)));
+		is >> colname>>type;		
+		if (colname == "primary" || colname == "PRIMARY") {	//primary key(列名)
+			int tmp1 = col.find("(");
+			string keyColName = col.substr(tmp1 + 1, col.size() - 2 - tmp1);	//主键所在的列名
+			keyColName = strip(keyColName);
+			action->setPrimaryKey(keyColName);
+		}
+		else {
+			constraint = "";
+			while (is >> constraintpart) constraint += constraintpart;
+			action->addItem(colname, std::move(str2type(type)), std::move(str2constraints(constraint)));
+		}
 	}
-	col=cols[len - 1];	//最后一个子句：primary key(stu_id)
-	int leftParentthis = col.find("(");
-	int rightParentthis = col.find(")");
-	colname = col.substr(leftParentthis + 1, rightParentthis - 1 - leftParentthis);
-	action->setPrimaryKey(colname);
 	return action;
 }
 
@@ -335,6 +354,16 @@ pAction Parser::dropDb(string& str, pEngine engine) {
 	string cmd, db;
 	is >> cmd >> cmd>>db;
 	action->setDbName(db);
+	return action;
+}
+
+pAction Parser::dropTb(string& str, pEngine engine) {
+	DropTbAction* action = new DropTbAction();
+	action->setType("droptb");
+	istringstream is(str);
+	string cmd, tbname;	
+	is >> cmd >> cmd >> tbname;
+	action->setTable(tbname);
 	return action;
 }
 
